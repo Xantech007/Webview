@@ -5,9 +5,9 @@ require_once __DIR__ . '/../config.php';
 
 try {
     $pdo = new PDO(
-        "mysql:host=" . DB_HOST . ";dbname=" . DB_NAME . ";charset=utf8mb4",
-        DB_USER,
-        DB_PASS,
+        "mysql:host=" . sql304.infinityfree.com . ";dbname=" . if0_41120839_webcl . ";charset=utf8mb4",
+        if0_41120839,
+        v6OWzaMSbz,
         [
             PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
             PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
