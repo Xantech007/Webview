@@ -1,7 +1,6 @@
 <?php
-// index.php - Main page (exact visual clone of gs1dp5.optiseccs.com)
-
-$page_title = "BINANCE DIGITAL";
+// index.php — exact visual clone of https://gs1dp5.optiseccs.com as of Feb 2025/2026
+// Micheal — this is ready to run, no PHP logic yet (pure HTML+CSS replica)
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -15,68 +14,111 @@ $page_title = "BINANCE DIGITAL";
 </head>
 <body>
 
-<!-- Header / Branding -->
-<div class="header">
-    BINANCE DIGITAL
+<!-- Repeated branding header (exact match) -->
+<div class="branding">BINANCE DIGITAL</div>
+<div class="branding">BINANCE DIGITAL</div>
+<div class="branding">BINANCE DIGITAL</div>
+
+<!-- Language selector (only visible option) -->
+<div class="language">English</div>
+
+<!-- Top action buttons -->
+<div class="top-actions">
+    <button class="action-btn">Recharge</button>
+    <button class="action-btn">Withdraw</button>
+    <button class="action-btn">App</button>
 </div>
 
-<!-- Language -->
-<div class="lang">
-    English
-</div>
-
-<!-- Top buttons (Recharge / Withdraw / App) -->
-<div class="top-btns">
-    <button>Recharge</button>
-    <button>Withdraw</button>
-    <button>App</button>
-</div>
-
-<!-- Links -->
-<div class="links">
-    <span>Company Profile</span>
-    <span>Task Hall</span>
-</div>
-
-<!-- VIP Levels Section -->
-<div class="section-title">VIP Levels</div>
-<table class="vip-table">
-    <tr><td>VIP1</td><td>Unlock amount: $ 10.00</td></tr>
-    <tr><td>VIP2</td><td>Unlock amount: $ 50.00</td></tr>
-    <tr><td>VIP3</td><td>Unlock amount: $ 200.00</td></tr>
-    <tr><td>VIP4</td><td>Unlock amount: $ 600.00</td></tr>
-    <tr><td>VIP5</td><td>Unlock amount: $ 1,200.00</td></tr>
-    <tr><td>VIP6</td><td>Unlock amount: $ 2,400.00</td></tr>
-    <tr><td>VIP7</td><td>Unlock amount: $ 4,800.00</td></tr>
-    <tr><td>VIP8</td><td>Unlock amount: $ 9,600.00</td></tr>
-    <tr><td>VIP9</td><td>Unlock amount: $ 19,200.00</td></tr>
-    <tr><td>VIP10</td><td>Unlock amount: $ 38,400.00</td></tr>
-</table>
-
-<!-- Member / Earnings showcase -->
-<div class="section-title">Member</div>
-<div class="member-list">
-    <div>VIP2 &nbsp; +$ 16.00 &nbsp; DFFDD******</div>
-    <div>VIP5 &nbsp; +$ 480.00 &nbsp; ******98554</div>
-    <div>VIP3 &nbsp; +$ 68.00 &nbsp; cxvbb******</div>
-    <div>VIP6 &nbsp; +$ 1,104.00 &nbsp; fgfghgh******</div>
-    <div>VIP4 &nbsp; +$ 216.00 &nbsp; ******2154</div>
-    <div>VIP7 &nbsp; +$ 2,496.00 &nbsp; yuy******</div>
-    <div>VIP5 &nbsp; +$ 480.00 &nbsp; ******98554</div>
-    <div>VIP7 &nbsp; +$ 2,496.00 &nbsp; rt5345******</div>
-    <div>VIP10 &nbsp; +$ 32,640.00 &nbsp; gmail999******</div>
-    <!-- You can add more fake entries here if you want it to scroll longer -->
-</div>
-
-<!-- Bottom Navigation Bar -->
-<div class="bottom-nav">
+<!-- Bottom navigation bar (fixed at bottom) -->
+<nav class="bottom-nav">
     <div>Regulatory Authority</div>
     <div>Home</div>
     <div>Task</div>
     <div>Team</div>
     <div>VIP</div>
     <div>Me</div>
-</div>
+</nav>
+
+<!-- Main content wrapper -->
+<main>
+
+    <!-- VIP Levels section -->
+    <h2 class="section-title">VIP Levels</h2>
+    <div class="vip-grid">
+        <div class="vip-item">
+            <span class="vip-level">VIP1</span>
+            <span class="vip-unlock">Unlock amount: $ 10.00</span>
+        </div>
+        <div class="vip-item">
+            <span class="vip-level">VIP2</span>
+            <span class="vip-unlock">Unlock amount: $ 50.00</span>
+        </div>
+        <div class="vip-item">
+            <span class="vip-level">VIP3</span>
+            <span class="vip-unlock">Unlock amount: $ 200.00</span>
+        </div>
+        <div class="vip-item">
+            <span class="vip-level">VIP4</span>
+            <span class="vip-unlock">Unlock amount: $ 600.00</span>
+        </div>
+        <div class="vip-item">
+            <span class="vip-level">VIP5</span>
+            <span class="vip-unlock">Unlock amount: $ 1,200.00</span>
+        </div>
+        <div class="vip-item">
+            <span class="vip-level">VIP6</span>
+            <span class="vip-unlock">Unlock amount: $ 2,400.00</span>
+        </div>
+        <div class="vip-item">
+            <span class="vip-level">VIP7</span>
+            <span class="vip-unlock">Unlock amount: $ 4,800.00</span>
+        </div>
+        <div class="vip-item">
+            <span class="vip-level">VIP8</span>
+            <span class="vip-unlock">Unlock amount: $ 9,600.00</span>
+        </div>
+        <div class="vip-item">
+            <span class="vip-level">VIP9</span>
+            <span class="vip-unlock">Unlock amount: $ 19,200.00</span>
+        </div>
+        <div class="vip-item">
+            <span class="vip-level">VIP10</span>
+            <span class="vip-unlock">Unlock amount: $ 38,400.00</span>
+        </div>
+    </div>
+
+    <!-- Member / Earnings showcase -->
+    <h2 class="section-title">Member</h2>
+    <div class="member-list">
+        <div class="member-entry">
+            <span class="member-vip">VIP2</span>
+            <span class="member-profit">+$ 16.00</span>
+            <span class="member-name">DFFDD******</span>
+        </div>
+        <div class="member-entry">
+            <span class="member-vip">VIP5</span>
+            <span class="member-profit">+$ 480.00</span>
+            <span class="member-name">******98554</span>
+        </div>
+        <div class="member-entry">
+            <span class="member-vip">VIP3</span>
+            <span class="member-profit">+$ 68.00</span>
+            <span class="member-name">cxvbb******</span>
+        </div>
+        <div class="member-entry">
+            <span class="member-vip">VIP6</span>
+            <span class="member-profit">+$ 1,104.00</span>
+            <span class="member-name">fgfghgh******</span>
+        </div>
+        <div class="member-entry">
+            <span class="member-vip">VIP4</span>
+            <span class="member-profit">+$ 216.00</span>
+            <span class="member-name">******2154</span>
+        </div>
+        <!-- You can duplicate more entries here if you want longer scroll -->
+    </div>
+
+</main>
 
 </body>
 </html>
