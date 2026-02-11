@@ -1,4 +1,6 @@
 <?php
+// index.php - Main page (exact visual clone of gs1dp5.optiseccs.com)
+
 $page_title = "BINANCE DIGITAL";
 ?>
 <!DOCTYPE html>
@@ -7,30 +9,36 @@ $page_title = "BINANCE DIGITAL";
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>BINANCE DIGITAL</title>
-    <link rel="stylesheet" href="style.css">
+    
+    <!-- Link to CSS in the clean assets folder -->
+    <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
 
+<!-- Header / Branding -->
 <div class="header">
     BINANCE DIGITAL
 </div>
 
+<!-- Language -->
 <div class="lang">
     English
 </div>
 
+<!-- Top buttons (Recharge / Withdraw / App) -->
 <div class="top-btns">
     <button>Recharge</button>
     <button>Withdraw</button>
     <button>App</button>
 </div>
 
+<!-- Links -->
 <div class="links">
     <span>Company Profile</span>
     <span>Task Hall</span>
 </div>
 
-<!-- VIP Levels -->
+<!-- VIP Levels Section -->
 <div class="section-title">VIP Levels</div>
 <table class="vip-table">
     <tr><td>VIP1</td><td>Unlock amount: $ 10.00</td></tr>
@@ -45,7 +53,7 @@ $page_title = "BINANCE DIGITAL";
     <tr><td>VIP10</td><td>Unlock amount: $ 38,400.00</td></tr>
 </table>
 
-<!-- Member List -->
+<!-- Member / Earnings showcase -->
 <div class="section-title">Member</div>
 <div class="member-list">
     <div>VIP2 &nbsp; +$ 16.00 &nbsp; DFFDD******</div>
@@ -57,10 +65,10 @@ $page_title = "BINANCE DIGITAL";
     <div>VIP5 &nbsp; +$ 480.00 &nbsp; ******98554</div>
     <div>VIP7 &nbsp; +$ 2,496.00 &nbsp; rt5345******</div>
     <div>VIP10 &nbsp; +$ 32,640.00 &nbsp; gmail999******</div>
-    <!-- Add more lines as needed -->
+    <!-- You can add more fake entries here if you want it to scroll longer -->
 </div>
 
-<!-- Bottom Navigation -->
+<!-- Bottom Navigation Bar -->
 <div class="bottom-nav">
     <div>Regulatory Authority</div>
     <div>Home</div>
