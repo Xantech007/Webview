@@ -1,96 +1,142 @@
-* { margin:0; padding:0; box-sizing:border-box; }
-body {
-    background: #000;
-    color: #fff;
-    font-family: Arial, sans-serif;
-    line-height: 1.6;
+/* assets/css/style.css */
+/* Exact visual match to gs1dp5.optiseccs.com style */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
+body {
+    background: #000000;
+    color: #ffffff;
+    font-family: Arial, Helvetica, sans-serif;
+    line-height: 1.5;
+    min-height: 100vh;
+    padding-bottom: 70px; /* space for fixed bottom nav */
+}
+
+/* Header */
 .header {
-    font-size: 28px;
+    font-size: 32px;
     font-weight: bold;
     text-align: center;
-    padding: 20px 10px;
-    color: #fff;
-    text-shadow: 0 0 10px #00ffff;
+    padding: 25px 15px 15px;
+    color: #ffffff;
+    text-shadow: 0 0 15px #00ffff, 0 0 25px #00ffff;
+    letter-spacing: 2px;
 }
 
+/* Language selector */
 .lang {
     text-align: center;
-    padding: 10px;
     font-size: 18px;
-    color: #0ff;
+    color: #00ffff;
+    padding: 10px;
+    margin-bottom: 10px;
 }
 
+/* Top buttons */
 .top-btns {
     display: flex;
     justify-content: center;
-    gap: 10px;
-    padding: 15px 10px;
+    gap: 12px;
+    padding: 15px;
+    flex-wrap: wrap;
 }
 .top-btns button {
-    padding: 12px 20px;
-    background: #0ff;
-    color: #000;
+    padding: 12px 28px;
+    background: #00ffff;
+    color: #000000;
     border: none;
     border-radius: 8px;
-    font-weight: bold;
     font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0, 255, 255, 0.4);
 }
 
+/* Links below buttons */
 .links {
     text-align: center;
-    padding: 15px;
-    color: #0ff;
+    padding: 15px 10px;
     font-size: 16px;
 }
-
-.section-title {
-    text-align: center;
-    font-size: 20px;
-    margin: 15px 0 8px;
-    color: #0ff;
+.links span {
+    color: #00ffff;
+    margin: 0 15px;
+    cursor: pointer;
 }
 
+/* Section titles */
+.section-title {
+    text-align: center;
+    font-size: 22px;
+    color: #00ffff;
+    margin: 20px 0 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* VIP Levels Table */
 .vip-table {
     width: 100%;
     border-collapse: collapse;
-    margin: 5px 0 20px;
+    margin: 10px 0 30px;
+    background: #111111;
 }
 .vip-table td {
-    padding: 12px 10px;
-    border-bottom: 1px solid #333;
+    padding: 14px 12px;
+    border-bottom: 1px solid #333333;
     font-size: 15px;
 }
 .vip-table tr:nth-child(odd) {
-    background: #111;
+    background: #1a1a1a;
+}
+.vip-table td:first-child {
+    font-weight: bold;
+    color: #00ffff;
+    width: 30%;
 }
 
+/* Member list */
 .member-list {
     padding: 10px;
-    max-height: 300px;
-    overflow-y: auto;
     background: #0a0a0a;
+    max-height: 320px;
+    overflow-y: auto;
+    border: 1px solid #222222;
+    border-radius: 6px;
 }
 .member-list div {
-    padding: 10px 5px;
-    border-bottom: 1px solid #222;
+    padding: 12px 8px;
+    border-bottom: 1px solid #222222;
     font-size: 14px;
+    color: #cccccc;
+}
+.member-list div:last-child {
+    border-bottom: none;
 }
 
+/* Bottom Navigation */
 .bottom-nav {
     position: fixed;
     bottom: 0;
     left: 0;
     right: 0;
-    background: #000;
-    border-top: 2px solid #0ff;
+    background: #000000;
+    border-top: 2px solid #00ffff;
     display: flex;
-    padding: 8px 0;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    padding: 10px 5px;
     font-size: 12px;
     text-align: center;
+    box-shadow: 0 -4px 15px rgba(0, 255, 255, 0.2);
 }
 .bottom-nav div {
-    flex: 1;
-    color: #0ff;
+    flex: 1 1 16%;
+    color: #00ffff;
+    padding: 6px 4px;
+    min-width: 60px;
 }
