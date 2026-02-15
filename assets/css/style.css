@@ -1,5 +1,4 @@
-/* assets/css/style.css */
-/* Exact visual match to gs1dp5.optiseccs.com style */
+/* assets/css/style.css - Gold + Black Binance-inspired theme */
 
 * {
     margin: 0;
@@ -8,135 +7,153 @@
 }
 
 body {
-    background: #000000;
-    color: #ffffff;
-    font-family: Arial, Helvetica, sans-serif;
-    line-height: 1.5;
+    background: #0B0E11;           /* Binance dark background */
+    color: #e0e0e0;                /* Light gray text for readability */
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    line-height: 1.6;
     min-height: 100vh;
-    padding-bottom: 70px; /* space for fixed bottom nav */
+    padding-bottom: 80px;          /* Space for fixed bottom nav */
 }
 
-/* Header */
+/* Header - Gold glow */
 .header {
-    font-size: 32px;
-    font-weight: bold;
+    font-size: 34px;
+    font-weight: 900;
     text-align: center;
-    padding: 25px 15px 15px;
-    color: #ffffff;
-    text-shadow: 0 0 15px #00ffff, 0 0 25px #00ffff;
-    letter-spacing: 2px;
+    padding: 30px 15px 20px;
+    color: #F0B90B;                /* Binance gold */
+    text-shadow: 0 0 20px rgba(240, 185, 11, 0.6), 0 0 40px rgba(240, 185, 11, 0.3);
+    letter-spacing: 3px;
 }
 
-/* Language selector */
+/* Language */
 .lang {
     text-align: center;
     font-size: 18px;
-    color: #00ffff;
+    color: #F0B90B;
     padding: 10px;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
 }
 
-/* Top buttons */
+/* Top buttons - Gold buttons */
 .top-btns {
     display: flex;
     justify-content: center;
-    gap: 12px;
-    padding: 15px;
+    gap: 15px;
+    padding: 20px 15px;
     flex-wrap: wrap;
 }
 .top-btns button {
-    padding: 12px 28px;
-    background: #00ffff;
-    color: #000000;
+    padding: 14px 32px;
+    background: #F0B90B;           /* Binance gold */
+    color: #0B0E11;                /* Dark text on gold */
     border: none;
     border-radius: 8px;
-    font-size: 16px;
-    font-weight: bold;
+    font-size: 17px;
+    font-weight: 700;
     cursor: pointer;
-    box-shadow: 0 4px 12px rgba(0, 255, 255, 0.4);
+    box-shadow: 0 6px 16px rgba(240, 185, 11, 0.35);
+    transition: all 0.2s;
+}
+.top-btns button:hover {
+    background: #FFC107;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(240, 185, 11, 0.5);
 }
 
-/* Links below buttons */
+/* Links */
 .links {
     text-align: center;
     padding: 15px 10px;
     font-size: 16px;
 }
 .links span {
-    color: #00ffff;
-    margin: 0 15px;
+    color: #F0B90B;
+    margin: 0 20px;
     cursor: pointer;
+    transition: color 0.2s;
+}
+.links span:hover {
+    color: #FFC107;
 }
 
 /* Section titles */
 .section-title {
     text-align: center;
-    font-size: 22px;
-    color: #00ffff;
-    margin: 20px 0 10px;
+    font-size: 24px;
+    color: #F0B90B;
+    margin: 25px 0 12px;
     text-transform: uppercase;
-    letter-spacing: 1px;
+    letter-spacing: 1.5px;
+    font-weight: 700;
 }
 
-/* VIP Levels Table */
+/* VIP Table */
 .vip-table {
     width: 100%;
     border-collapse: collapse;
-    margin: 10px 0 30px;
-    background: #111111;
+    margin: 15px 0 35px;
+    background: #11161C;           /* Darker Binance panel */
+    border: 1px solid #1E2A38;
+    border-radius: 8px;
+    overflow: hidden;
 }
 .vip-table td {
-    padding: 14px 12px;
-    border-bottom: 1px solid #333333;
+    padding: 16px 14px;
+    border-bottom: 1px solid #1E2A38;
     font-size: 15px;
 }
 .vip-table tr:nth-child(odd) {
-    background: #1a1a1a;
+    background: #0F141A;
 }
 .vip-table td:first-child {
     font-weight: bold;
-    color: #00ffff;
-    width: 30%;
+    color: #F0B90B;
+    width: 35%;
 }
 
 /* Member list */
 .member-list {
-    padding: 10px;
-    background: #0a0a0a;
-    max-height: 320px;
+    padding: 12px;
+    background: #11161C;
+    max-height: 340px;
     overflow-y: auto;
-    border: 1px solid #222222;
-    border-radius: 6px;
+    border: 1px solid #1E2A38;
+    border-radius: 8px;
 }
 .member-list div {
-    padding: 12px 8px;
-    border-bottom: 1px solid #222222;
+    padding: 14px 10px;
+    border-bottom: 1px solid #1E2A38;
     font-size: 14px;
-    color: #cccccc;
+    color: #d0d0d0;
 }
 .member-list div:last-child {
     border-bottom: none;
 }
 
-/* Bottom Navigation */
+/* Bottom Navigation - Gold text */
 .bottom-nav {
     position: fixed;
     bottom: 0;
     left: 0;
     right: 0;
-    background: #000000;
-    border-top: 2px solid #00ffff;
+    background: #0B0E11;
+    border-top: 2px solid #F0B90B;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
-    padding: 10px 5px;
-    font-size: 12px;
+    padding: 12px 6px;
+    font-size: 13px;
     text-align: center;
-    box-shadow: 0 -4px 15px rgba(0, 255, 255, 0.2);
+    box-shadow: 0 -6px 20px rgba(240, 185, 11, 0.15);
 }
 .bottom-nav div {
     flex: 1 1 16%;
-    color: #00ffff;
-    padding: 6px 4px;
-    min-width: 60px;
+    color: #F0B90B;
+    padding: 8px 4px;
+    min-width: 65px;
+    transition: color 0.2s;
+}
+.bottom-nav div:hover {
+    color: #FFC107;
 }
