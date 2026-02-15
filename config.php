@@ -1,13 +1,10 @@
 <?php
-// config.php
+// config.php - Keep this secure (no public access)
 
-define('DB_HOST', 'localhost');
-define('DB_USER', 'root');           // change this
-define('DB_PASS', '');               // change this
-define('DB_NAME', 'web_app');
-
-define('SITE_URL', 'http://localhost/your-project/');  // change to your domain
-define('SITE_NAME', 'My Web App');
-
-// For password hashing (do NOT change)
-define('PASSWORD_HASH_ALGO', PASSWORD_ARGON2ID);
+define('DB_HOST', 'sql304.infinityfree.com');
+define('DB_USER', 'if0_41120839');      // Change to your DB user
+define('DB_PASS', 'v6OWzaMSbz');          // Change to your DB password
+define('DB_NAME', 'if0_41120839_webcl');
+define('SITE_NAME', 'BINANCE DIGITAL');
+define('SITE_URL', 'https://btest6.page.gd');  // Update to your domain
+?>
