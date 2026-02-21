@@ -21,11 +21,26 @@ $query = $conn->query("SELECT title FROM news ORDER BY id DESC");
 </div>
 
 <!-- Action Buttons Section -->
-<div class="action-box">
-    <a href="#" class="action-item">Recharge</a>
-    <a href="#" class="action-item">Withdraw</a>
-    <a href="#" class="action-item">App</a>
-    <a href="#" class="action-item">Company Profile</a>
+<div class="action-container">
+    <a href="#" class="action-card">
+        <div class="icon-circle">💰</div>
+        <span>Recharge</span>
+    </a>
+
+    <a href="#" class="action-card">
+        <div class="icon-circle">🏧</div>
+        <span>Withdraw</span>
+    </a>
+
+    <a href="#" class="action-card">
+        <div class="icon-circle">📥</div>
+        <span>App</span>
+    </a>
+
+    <a href="#" class="action-card">
+        <div class="icon-circle">📄</div>
+        <span>Company Profile</span>
+    </a>
 </div>
 
 <?php include "inc/footer.php"; ?>
