@@ -6,32 +6,40 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
+*{
+    box-sizing:border-box;
+}
+
 body{
     margin:0;
     font-family:Arial, sans-serif;
     background:#f5f5f5;
 }
 
-/* Header */
+/* ================= HEADER ================= */
+
 .header{
     display:flex;
     justify-content:space-between;
     align-items:center;
-    padding:12px 15px;
+    padding:15px 20px;
     background:#111;
     color:#fff;
 }
 
 .logo{
-    font-weight:bold;
     font-size:18px;
+    font-weight:bold;
 }
 
-.lang{
-    color:#fff;
+.lang select{
+    padding:5px 8px;
+    border-radius:5px;
+    border:none;
 }
 
-/* News */
+/* ================= NEWS SCROLL ================= */
+
 .news-wrapper{
     background:#fff;
     padding:10px 0;
@@ -61,7 +69,7 @@ body{
     100%{ transform:translateX(-100%); }
 }
 
-/* Action Section Styled Like Screenshot */
+/* ================= ACTION SECTION ================= */
 
 .action-container{
     margin:20px;
@@ -99,8 +107,36 @@ body{
     display:block;
 }
 
+/* ================= BANNER SLIDER ================= */
 
-/* Footer */
+.banner-slider{
+    margin:20px;                  /* Same width as action container */
+    border-radius:15px;
+    overflow:hidden;
+    position:relative;
+    height:240px;                 /* 1.5x action container height */
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:#000;
+}
+
+.banner-slider img{
+    position:absolute;
+    width:100%;
+    height:100%;
+    object-fit:cover;              /* Force resize */
+    object-position:center;        /* Center image */
+    opacity:0;
+    transition:opacity 0.5s ease-in-out;
+}
+
+.banner-slider img.active{
+    opacity:1;
+}
+
+/* ================= FOOTER ================= */
+
 .footer{
     position:fixed;
     bottom:0;
@@ -117,6 +153,7 @@ body{
     font-size:12px;
     text-align:center;
 }
+
 </style>
 </head>
 <body>
@@ -130,31 +167,3 @@ body{
         </select>
     </div>
 </div>
-
-/* Banner Slider */
-
-.banner-slider{
-    margin:20px;              /* Same as action container */
-    border-radius:15px;
-    overflow:hidden;
-    position:relative;
-    height:240px;             /* 1.5x action container height (if action is ~160px) */
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    background:#000;
-}
-
-.banner-slider img{
-    position:absolute;
-    width:100%;
-    height:100%;
-    object-fit:cover;          /* Force resize */
-    object-position:center;    /* Center image */
-    opacity:0;
-    transition:opacity 0.5s ease-in-out;
-}
-
-.banner-slider img.active{
-    opacity:1;
-}
