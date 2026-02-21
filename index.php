@@ -1,17 +1,31 @@
 <?php
-require_once "includes/db_connect.php";
-require_once "includes/auth.php";
+require_once "config/database.php";
 
-$stmt = $pdo->prepare("SELECT * FROM users WHERE id = :id");
-$stmt->execute([':id' => $_SESSION['user_id']]);
-$user = $stmt->fetch();
+// Fetch latest news (you can limit if needed)
+$query = $conn->query("SELECT title FROM news ORDER BY id DESC");
 ?>
 
-<h2>Welcome <?= htmlspecialchars($user['username']) ?></h2>
-<p>Balance: $<?= number_format($user['balance'],2) ?></p>
-<p>VIP Level: <?= $user['vip_level'] ?></p>
+<?php include "inc/header.php"; ?>
 
-<a href="task.php">Do Task</a><br>
-<a href="deposit.php">Deposit</a><br>
-<a href="withdraw.php">Withdraw</a><br>
-<a href="logout.php">Logout</a>
+<!-- Scrolling News Section -->
+<div class="news-wrapper">
+    <div class="news-marquee">
+        <div class="news-content">
+            <?php
+            while ($row = $query->fetch_assoc()) {
+                echo "<span class='news-item'>" . htmlspecialchars($row['title']) . "</span>";
+            }
+            ?>
+        </div>
+    </div>
+</div>
+
+<!-- Action Buttons Section -->
+<div class="action-box">
+    <a href="#" class="action-item">Recharge</a>
+    <a href="#" class="action-item">Withdraw</a>
+    <a href="#" class="action-item">App</a>
+    <a href="#" class="action-item">Company Profile</a>
+</div>
+
+<?php include "inc/footer.php"; ?>
