@@ -130,3 +130,31 @@ body{
         </select>
     </div>
 </div>
+
+/* Banner Slider */
+
+.banner-slider{
+    margin:20px;              /* Same as action container */
+    border-radius:15px;
+    overflow:hidden;
+    position:relative;
+    height:240px;             /* 1.5x action container height (if action is ~160px) */
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:#000;
+}
+
+.banner-slider img{
+    position:absolute;
+    width:100%;
+    height:100%;
+    object-fit:cover;          /* Force resize */
+    object-position:center;    /* Center image */
+    opacity:0;
+    transition:opacity 0.5s ease-in-out;
+}
+
+.banner-slider img.active{
+    opacity:1;
+}
