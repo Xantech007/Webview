@@ -44,8 +44,8 @@ $query = $conn->query("SELECT title FROM news ORDER BY id DESC");
 </div>
 
 <div class="banner-slider">
-    <img src="assets/images/banner1.webp" class="slide active">
-    <img src="assets/images/banner2.webp" class="slide">
+    <img src="assets/images/banner1.jpeg" class="slide active">
+    <img src="assets/images/banner2.jpeg" class="slide">
 </div>
 
 <?php include "inc/footer.php"; ?>
