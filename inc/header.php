@@ -152,7 +152,7 @@ body{
 <body>
 
 <div class="header">
-    <div class="logo">MyLogo</div>
+    <div class="logo">Binance</div>
     <div class="lang">
         <select>
             <option>EN</option>
