@@ -110,30 +110,28 @@ body{
 /* ================= BANNER SLIDER ================= */
 
 .banner-slider{
-    margin:20px;                  /* Same width as action container */
+    margin:20px;
     border-radius:15px;
     overflow:hidden;
+    height:240px;
     position:relative;
-    height:240px;                 /* 1.5x action container height */
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    background:#000;
 }
 
-.banner-slider img{
+.banner-slider .slide{
     position:absolute;
     width:100%;
     height:100%;
-    object-fit:cover;              /* Force resize */
-    object-position:center;        /* Center image */
-    opacity:0;
-    transition:opacity 0.5s ease-in-out;
+    object-fit:cover;
+    object-position:center;
+    top:0;
+    left:0;
+    display:none;
 }
 
-.banner-slider img.active{
-    opacity:1;
+.banner-slider .slide:first-child{
+    display:block;
 }
+
 
 /* ================= FOOTER ================= */
 
