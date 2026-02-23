@@ -107,24 +107,25 @@ body{
     display:block;
 }
 
-/* ================= BANNER SLIDER ================= */
+/* ================= SMOOTH SLIDER ================= */
 
 .banner-slider{
     margin:20px;
     border-radius:15px;
     overflow:hidden;
-    position:relative;
 }
 
-.banner-slider img{
-    width:100%;              /* Same width as action container */
-    height:auto;             /* Let height adjust naturally */
-    display:none;
+.banner-track{
+    display:flex;
+    transition:transform 0.6s ease-in-out;
 }
 
-.banner-slider img.active{
-    display:block;
+.banner-track img{
+    width:100%;
+    height:auto;
+    flex-shrink:0;
 }
+
 
 
 /* ================= FOOTER ================= */
