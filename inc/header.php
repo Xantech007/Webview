@@ -113,18 +113,12 @@ body{
     margin:20px;
     border-radius:15px;
     overflow:hidden;
-    height:260px; /* slightly taller */
     position:relative;
 }
 
 .banner-slider img{
-    position:absolute;
-    top:0;
-    left:0;
-    width:100%;
-    height:100%;
-    object-fit:cover;        /* FORCE full fit */
-    object-position:center;  /* Center image */
+    width:100%;              /* Same width as action container */
+    height:auto;             /* Let height adjust naturally */
     display:none;
 }
 
