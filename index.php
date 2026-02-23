@@ -50,5 +50,29 @@ $query = $conn->query("SELECT title FROM news ORDER BY id DESC");
     </div>
 </div>
 
+<?php
+$vipQuery = $conn->query("SELECT * FROM vip ORDER BY id ASC");
+?>
+
+<!-- ================= TASK HALL ================= -->
+
+<div class="task-section">
+    <h2 class="task-title">Task Hall</h2>
+
+    <?php while($vip = $vipQuery->fetch_assoc()): ?>
+        <div class="task-card">
+            <img src="assets/images/vip.jpg" class="task-left">
+
+            <div class="task-content">
+                <h3><?php echo htmlspecialchars($vip['name'] ?? 'VIP Level'); ?></h3>
+                <p><?php echo htmlspecialchars($vip['description'] ?? 'Task details here'); ?></p>
+            </div>
+
+            <img src="assets/images/arrow.jpeg" class="task-right">
+        </div>
+    <?php endwhile; ?>
+
+</div>
+
 
 <?php include "inc/footer.php"; ?>
