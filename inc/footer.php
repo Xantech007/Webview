@@ -9,15 +9,15 @@
 <script>
 window.onload = function(){
 
-    var slides = document.querySelectorAll(".banner-slider img");
+    var track = document.querySelector(".banner-track");
+    var slides = document.querySelectorAll(".banner-track img");
     var current = 0;
 
     if(slides.length < 2) return;
 
     setInterval(function(){
-        slides[current].style.display = "none";
         current = (current + 1) % slides.length;
-        slides[current].style.display = "block";
+        track.style.transform = "translateX(-" + (current * 100) + "%)";
     }, 1500);
 
 };
