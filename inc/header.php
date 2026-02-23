@@ -113,22 +113,22 @@ body{
     margin:20px;
     border-radius:15px;
     overflow:hidden;
-    height:240px;
+    height:260px; /* slightly taller */
     position:relative;
 }
 
-.banner-slider .slide{
+.banner-slider img{
     position:absolute;
-    width:100%;
-    height:100%;
-    object-fit:cover;
-    object-position:center;
     top:0;
     left:0;
+    width:100%;
+    height:100%;
+    object-fit:cover;        /* FORCE full fit */
+    object-position:center;  /* Center image */
     display:none;
 }
 
-.banner-slider .slide:first-child{
+.banner-slider img.active{
     display:block;
 }
 
