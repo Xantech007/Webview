@@ -160,3 +160,56 @@ body{
         </select>
     </div>
 </div>
+
+
+/* ================= TASK HALL ================= */
+
+.task-section{
+    margin:20px;
+}
+
+.task-title{
+    margin-bottom:15px;
+    font-size:18px;
+    font-weight:bold;
+}
+
+.task-card{
+    background:#fff;
+    border-radius:12px;
+    padding:15px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-bottom:15px;
+    box-shadow:0 2px 8px rgba(0,0,0,0.05);
+}
+
+.task-left{
+    width:50px;          /* 1x1 square */
+    height:50px;
+    object-fit:cover;
+    border-radius:8px;
+}
+
+.task-content{
+    flex:1;
+    margin:0 15px;
+}
+
+.task-content h3{
+    margin:0;
+    font-size:16px;
+}
+
+.task-content p{
+    margin:5px 0 0 0;
+    font-size:13px;
+    color:#666;
+}
+
+.task-right{
+    width:20px;          /* 1x3 vertical look */
+    height:60px;
+    object-fit:contain;
+}
