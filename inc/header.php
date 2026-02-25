@@ -203,6 +203,48 @@ body{
     height:auto;
 }
 
+/* ================= MEMBER LIST ================= */
+
+.member-section{
+    margin:20px;
+}
+
+.member-title{
+    font-size:18px;
+    font-weight:bold;
+    margin-bottom:15px;
+}
+
+.member-grid{
+    display:grid;
+    grid-template-columns:repeat(2, 1fr);
+    gap:15px;
+}
+
+.member-card{
+    background:linear-gradient(135deg,#3a2b20,#5a402e);
+    border-radius:18px;
+    padding:20px;
+    color:#fff;
+    box-shadow:0 4px 12px rgba(0,0,0,0.2);
+}
+
+.vip-level{
+    font-size:14px;
+    opacity:0.9;
+}
+
+.earning{
+    font-size:22px;
+    font-weight:bold;
+    margin:8px 0;
+    color:#f6c27a;
+}
+
+.email{
+    font-size:13px;
+    opacity:0.8;
+}
     
 </style>
 </head>
