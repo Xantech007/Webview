@@ -320,18 +320,26 @@ body{
 
 /* ================= FOOTER ================= */
 
-.footer {
+/* Full-width wrapper touching screen edges */
+.footer-wrapper {
     position: fixed;
     bottom: 0;
     left: 0;
     width: 100%;
-    background: #3a2f27;
-    padding: 8px 0;
-    display: flex;
-    justify-content: space-around;
-    border-radius: 12px 12px 0 0;
+    padding: 10px; /* space around the rounded footer */
+    background: transparent; /* no background around */
 }
 
+/* Rounded footer bar */
+.footer {
+    background: #3a2f27;
+    padding: 12px 0;
+    display: flex;
+    justify-content: space-around;
+    border-radius: 20px;
+}
+
+/* Footer links */
 .footer a {
     color: #bdbdbd;
     text-decoration: none;
@@ -339,20 +347,27 @@ body{
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 6px 0;
 }
 
+/* Icons */
 .footer i {
     font-size: 20px;
     margin-bottom: 4px;
 }
 
+/* Active icon + text (yellow highlight like screenshot) */
 .footer a.active {
     color: #f4c277;
 }
 
 .footer a.active i {
     color: #f4c277;
+}
+
+/* Hover effect (optional) */
+.footer a:hover,
+.footer a:hover i {
+    color: #e4b060;
 }
 
 </style>
