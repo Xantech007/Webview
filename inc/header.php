@@ -147,21 +147,6 @@ body{
     text-align:center;
 }
 
-</style>
-</head>
-<body>
-
-<div class="header">
-    <div class="logo">Binance</div>
-    <div class="lang">
-        <select>
-            <option>EN</option>
-            <option>FR</option>
-        </select>
-    </div>
-</div>
-
-
 /* ================= TASK HALL ================= */
 
 .task-section{
@@ -217,3 +202,20 @@ body{
     width:18px;
     height:auto;
 }
+
+    
+</style>
+</head>
+<body>
+
+<div class="header">
+    <div class="logo">Binance</div>
+    <div class="lang">
+        <select>
+            <option>EN</option>
+            <option>FR</option>
+        </select>
+    </div>
+</div>
+
+
