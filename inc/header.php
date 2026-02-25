@@ -64,7 +64,7 @@ body{
     padding: 6px 12px;
     border-radius: 10px;
     font-size: 14px;
-    color: #f5c06c;
+    color: #fff;
     font-weight: 500;
 }
 
