@@ -135,5 +135,16 @@ $vipQuery = $conn->query("SELECT * FROM vip WHERE status = 1 ORDER BY id ASC");
     </div>
 </div>
 
+<!-- ================= REGULATORY AUTHORITY ================= -->
+
+<div class="reg-section">
+    <h2 class="reg-title">Regulatory Authority</h2>
+
+    <div class="reg-container">
+        <img src="assets/images/reg1.webp" alt="Regulatory 1">
+        <img src="assets/images/reg2.webp" alt="Regulatory 2">
+    </div>
+</div>
+
 
 <?php include "inc/footer.php"; ?>
