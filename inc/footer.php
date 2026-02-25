@@ -1,30 +1,31 @@
-<div class="footer">
-    <a href="index.php" class="active">
-        <i class="fa-solid fa-house"></i>
-        <span>Home</span>
-    </a>
+<div class="footer-wrapper">
+    <div class="footer">
+        <a href="index.php" class="active">
+            <i class="fa-solid fa-house"></i>
+            <span>Home</span>
+        </a>
 
-    <a href="#">
-        <i class="fa-solid fa-list-check"></i>
-        <span>Task</span>
-    </a>
+        <a href="#">
+            <i class="fa-solid fa-list-check"></i>
+            <span>Task</span>
+        </a>
 
-    <a href="#">
-        <i class="fa-solid fa-people-group"></i>
-        <span>Team</span>
-    </a>
+        <a href="#">
+            <i class="fa-solid fa-people-group"></i>
+            <span>Team</span>
+        </a>
 
-    <a href="#">
-        <i class="fa-solid fa-crown"></i>
-        <span>VIP</span>
-    </a>
+        <a href="#">
+            <i class="fa-solid fa-crown"></i>
+            <span>VIP</span>
+        </a>
 
-    <a href="#">
-        <i class="fa-solid fa-user"></i>
-        <span>Me</span>
-    </a>
+        <a href="#">
+            <i class="fa-solid fa-user"></i>
+            <span>Me</span>
+        </a>
+    </div>
 </div>
-
 <script>
 window.onload = function(){
 
