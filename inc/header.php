@@ -75,11 +75,12 @@ body{
     margin:20px;
     padding:20px 10px;
     border-radius:15px;
-    background:linear-gradient(135deg, #2b2b2b, #1c1c1c);
+    background:linear-gradient(135deg,#3a2b20,#5a402e);
     display:flex;
     justify-content:space-around;
     align-items:center;
-    box-shadow:0 4px 15px rgba(0,0,0,0.3);
+    box-shadow:0 4px 12px rgba(0,0,0,0.2);
+    color:#fff;
 }
 
 .action-card{
@@ -94,7 +95,7 @@ body{
     height:55px;
     margin:0 auto 8px auto;
     border-radius:50%;
-    background:linear-gradient(145deg, #f5c16c, #d89c3a);
+    background:linear-gradient(145deg,#f5c16c,#d89c3a);
     display:flex;
     justify-content:center;
     align-items:center;
@@ -126,25 +127,15 @@ body{
     flex-shrink:0;
 }
 
+/* ================= COMMON TITLES ================= */
 
-
-/* ================= FOOTER ================= */
-
-.footer{
-    position:fixed;
-    bottom:0;
-    width:100%;
-    background:#111;
-    display:flex;
-    justify-content:space-around;
-    padding:10px 0;
-}
-
-.footer a{
+.task-title,
+.member-title,
+.reg-title{
+    font-size:18px;
+    font-weight:bold;
+    margin-bottom:15px;
     color:#fff;
-    text-decoration:none;
-    font-size:12px;
-    text-align:center;
 }
 
 /* ================= TASK HALL ================= */
@@ -153,26 +144,19 @@ body{
     margin:20px;
 }
 
-.task-title{
-    font-size:18px;
-    font-weight:bold;
-    margin-bottom:15px;
-}
-
-/* Same width as banner */
 .task-card{
     width:100%;
-    background:#fff;
+    background:linear-gradient(135deg,#3a2b20,#5a402e);
     border-radius:15px;
     padding:15px;
     margin-bottom:15px;
     display:flex;
     align-items:center;
     justify-content:space-between;
-    box-shadow:0 2px 8px rgba(0,0,0,0.05);
+    box-shadow:0 4px 12px rgba(0,0,0,0.2);
+    color:#fff;
 }
 
-/* Optimize VIP image size */
 .task-left{
     width:45px;
     height:45px;
@@ -180,7 +164,6 @@ body{
     border-radius:8px;
 }
 
-/* Middle content */
 .task-content{
     flex:1;
     margin:0 15px;
@@ -194,29 +177,22 @@ body{
 .task-content p{
     margin:4px 0 0 0;
     font-size:13px;
-    color:#666;
+    color:#ddd;
 }
 
-/* Arrow image optimized */
 .task-right{
     width:18px;
     height:auto;
 }
 
-/* ================= MEMBER LIST AUTO SCROLL ================= */
+/* ================= MEMBER LIST ================= */
 
 .member-section{
     margin:20px;
 }
 
-.member-title{
-    font-size:18px;
-    font-weight:bold;
-    margin-bottom:15px;
-}
-
 .member-wrapper{
-    height:210px;   /* shows 1.5 rows */
+    height:210px;
     overflow:hidden;
     position:relative;
 }
@@ -256,7 +232,6 @@ body{
     opacity:0.8;
 }
 
-/* Smooth infinite scroll */
 @keyframes scrollUp{
     0% { transform:translateY(0); }
     100% { transform:translateY(-50%); }
@@ -265,33 +240,45 @@ body{
 /* ================= REGULATORY AUTHORITY ================= */
 
 .reg-section{
-    margin:20px; /* same as other sections */
-}
-
-.reg-title{
-    font-size:18px;
-    font-weight:bold;
-    margin-bottom:15px;
+    margin:20px;
 }
 
 .reg-container{
-    background:#fff;
+    background:linear-gradient(135deg,#3a2b20,#5a402e);
     border-radius:15px;
     padding:20px;
     display:flex;
     justify-content:space-between;
     align-items:center;
-    box-shadow:0 2px 8px rgba(0,0,0,0.05);
+    box-shadow:0 4px 12px rgba(0,0,0,0.2);
 }
 
 .reg-container img{
     width:48%;
     height:auto;
     object-fit:cover;
-    border-radius:12px;   /* rounded edges */
+    border-radius:15px;
 }
 
-    
+/* ================= FOOTER ================= */
+
+.footer{
+    position:fixed;
+    bottom:0;
+    width:100%;
+    background:#111;
+    display:flex;
+    justify-content:space-around;
+    padding:10px 0;
+}
+
+.footer a{
+    color:#fff;
+    text-decoration:none;
+    font-size:12px;
+    text-align:center;
+}
+
 </style>
 </head>
 <body>
@@ -305,5 +292,3 @@ body{
         </select>
     </div>
 </div>
-
-
