@@ -169,29 +169,33 @@ body{
 }
 
 .task-title{
-    margin-bottom:15px;
     font-size:18px;
     font-weight:bold;
+    margin-bottom:15px;
 }
 
+/* Same width as banner */
 .task-card{
+    width:100%;
     background:#fff;
-    border-radius:12px;
+    border-radius:15px;
     padding:15px;
+    margin-bottom:15px;
     display:flex;
     align-items:center;
     justify-content:space-between;
-    margin-bottom:15px;
     box-shadow:0 2px 8px rgba(0,0,0,0.05);
 }
 
+/* Optimize VIP image size */
 .task-left{
-    width:50px;          /* 1x1 square */
-    height:50px;
+    width:45px;
+    height:45px;
     object-fit:cover;
     border-radius:8px;
 }
 
+/* Middle content */
 .task-content{
     flex:1;
     margin:0 15px;
@@ -199,17 +203,17 @@ body{
 
 .task-content h3{
     margin:0;
-    font-size:16px;
+    font-size:15px;
 }
 
 .task-content p{
-    margin:5px 0 0 0;
+    margin:4px 0 0 0;
     font-size:13px;
     color:#666;
 }
 
+/* Arrow image optimized */
 .task-right{
-    width:20px;          /* 1x3 vertical look */
-    height:60px;
-    object-fit:contain;
+    width:18px;
+    height:auto;
 }
