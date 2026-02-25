@@ -20,27 +20,55 @@ $query = $conn->query("SELECT title FROM news ORDER BY id DESC");
     </div>
 </div>
 
-<!-- Action Buttons Section -->
-<div class="action-container">
-    <a href="#" class="action-card">
-        <div class="icon-circle">💰</div>
-        <span>Recharge</span>
-    </a>
+<?php
+// Example user data (replace with session data)
+$user_email = "nadiyayussif520@gmail.com";
+$user_vip = "VIP0";
+$user_balance = 0;
+?>
 
-    <a href="#" class="action-card">
-        <div class="icon-circle">🏧</div>
-        <span>Withdraw</span>
-    </a>
+<!-- ================= DASHBOARD ACTION SECTION ================= -->
 
-    <a href="#" class="action-card">
-        <div class="icon-circle">📥</div>
-        <span>App</span>
-    </a>
+<div class="dashboard-container">
 
-    <a href="#" class="action-card">
-        <div class="icon-circle">📄</div>
-        <span>Company Profile</span>
-    </a>
+    <div class="dashboard-top">
+        <div class="user-info">
+            <span class="user-email"><?php echo $user_email; ?></span>
+            <span class="vip-badge"><?php echo $user_vip; ?></span>
+        </div>
+
+        <a href="wallet.php" class="wallet-btn">
+            <i class="fa-solid fa-wallet"></i>
+        </a>
+    </div>
+
+    <div class="balance-box">
+        <span>Balance</span>
+        <strong>$<?php echo number_format($user_balance,2); ?></strong>
+    </div>
+
+    <div class="dashboard-actions">
+        <a href="#" class="action-item">
+            <div class="icon-circle"><i class="fa-solid fa-money-bill-wave"></i></div>
+            <span>Recharge</span>
+        </a>
+
+        <a href="#" class="action-item">
+            <div class="icon-circle"><i class="fa-solid fa-arrow-up-from-bracket"></i></div>
+            <span>Withdraw</span>
+        </a>
+
+        <a href="#" class="action-item">
+            <div class="icon-circle"><i class="fa-solid fa-mobile-screen"></i></div>
+            <span>App</span>
+        </a>
+
+        <a href="#" class="action-item">
+            <div class="icon-circle"><i class="fa-solid fa-building"></i></div>
+            <span>Company Profile</span>
+        </a>
+    </div>
+
 </div>
 
 <div class="banner-slider">
