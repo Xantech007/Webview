@@ -287,7 +287,8 @@ body{
 .reg-container img{
     width:48%;
     height:auto;
-    object-fit:contain;
+    object-fit:cover;
+    border-radius:12px;   /* rounded edges */
 }
 
     
