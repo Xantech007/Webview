@@ -332,7 +332,7 @@ body{
 
 /* Rounded footer bar */
 .footer {
-    background: #f6c27a;
+    background: #3a2b20;
     padding: 12px 0;
     display: flex;
     justify-content: space-around;
