@@ -46,7 +46,7 @@ body{
     background:#111;
     padding:10px 0;
     overflow:hidden;
-    border-bottom:1px solid #ddd;
+    border-bottom:1px solid #111;
 }
 
 .news-marquee{
@@ -63,7 +63,7 @@ body{
 .news-item{
     margin-right:50px;
     font-weight:500;
-    color:#333;
+    color:#fff;
 }
 
 @keyframes scroll-left{
