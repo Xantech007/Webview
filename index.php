@@ -56,23 +56,28 @@ $vipQuery = $conn->query("SELECT * FROM vip ORDER BY id ASC");
 
 <!-- ================= TASK HALL ================= -->
 
+<?php
+$vipQuery = $conn->query("SELECT * FROM vip WHERE status = 1 ORDER BY id ASC");
+?>
+
 <div class="task-section">
     <h2 class="task-title">Task Hall</h2>
 
     <?php while($vip = $vipQuery->fetch_assoc()): ?>
         <div class="task-card">
+
             <img src="assets/images/vip.jpg" class="task-left">
 
             <div class="task-content">
-                <h3><?php echo htmlspecialchars($vip['name'] ?? 'VIP Level'); ?></h3>
-                <p><?php echo htmlspecialchars($vip['description'] ?? 'Task details here'); ?></p>
+                <h3><?php echo htmlspecialchars($vip['name']); ?></h3>
+                <p>Amount: ₦<?php echo number_format($vip['amount'],2); ?></p>
             </div>
 
             <img src="assets/images/arrow.jpeg" class="task-right">
+
         </div>
     <?php endwhile; ?>
 
 </div>
-
 
 <?php include "inc/footer.php"; ?>
