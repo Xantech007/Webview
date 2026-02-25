@@ -43,7 +43,7 @@ body{
 /* ================= NEWS SCROLL ================= */
 
 .news-wrapper{
-    background:#fff;
+    background:#111;
     padding:10px 0;
     overflow:hidden;
     border-bottom:1px solid #ddd;
