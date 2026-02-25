@@ -18,26 +18,64 @@ body{
     background:#111;
 }
 
-/* ================= HEADER ================= */
+/* --- HEADER --- */
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 20px;
+    z-index: 9999;
 
-.header{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    padding:15px 20px;
-    background:#111;
-    color:#fff;
+    /* Transparent at top */
+    background: rgba(0,0,0,0);
+    transition: background 0.4s ease, backdrop-filter 0.4s ease;
 }
 
-.logo{
-    font-size:18px;
-    font-weight:bold;
+/* Logo + Text */
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
-.lang select{
-    padding:5px 8px;
-    border-radius:5px;
-    border:none;
+.header-left img {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+}
+
+.header-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: 1px;
+}
+
+/* Language button exactly like screenshot */
+.lang-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(255,255,255,0.1);
+    padding: 6px 12px;
+    border-radius: 10px;
+    font-size: 14px;
+    color: #f5c06c;
+    font-weight: 500;
+}
+
+.lang-btn i {
+    font-size: 16px;
+}
+
+/* Brown header background when scrolling */
+.header.scrolled {
+    background: #3a2f27;
+    backdrop-filter: blur(4px);
 }
 
 /* ================= NEWS SCROLL ================= */
@@ -374,12 +412,14 @@ body{
 </head>
 <body>
 
-<div class="header">
-    <div class="logo">Binance</div>
-    <div class="lang">
-        <select>
-            <option>EN</option>
-            <option>FR</option>
-        </select>
+<div class="header" id="header">
+    <div class="header-left">
+        <img src="assets/images/logo.webp" alt="Logo">
+        <div class="header-title">BINANCE DIGITAL</div>
+    </div>
+
+    <div class="lang-btn">
+        <i class="fa-solid fa-globe"></i>
+        English
     </div>
 </div>
