@@ -203,7 +203,7 @@ body{
     height:auto;
 }
 
-/* ================= MEMBER LIST ================= */
+/* ================= MEMBER LIST AUTO SCROLL ================= */
 
 .member-section{
     margin:20px;
@@ -215,10 +215,20 @@ body{
     margin-bottom:15px;
 }
 
-.member-grid{
-    display:grid;
-    grid-template-columns:repeat(2, 1fr);
-    gap:15px;
+.member-wrapper{
+    height:210px;   /* shows 1.5 rows */
+    overflow:hidden;
+    position:relative;
+}
+
+.member-track{
+    display:flex;
+    flex-direction:column;
+    animation:scrollUp 15s linear infinite;
+}
+
+.member-row{
+    margin-bottom:15px;
 }
 
 .member-card{
@@ -244,6 +254,12 @@ body{
 .email{
     font-size:13px;
     opacity:0.8;
+}
+
+/* Smooth infinite scroll */
+@keyframes scrollUp{
+    0% { transform:translateY(0); }
+    100% { transform:translateY(-50%); }
 }
     
 </style>
