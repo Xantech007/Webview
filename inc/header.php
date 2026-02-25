@@ -320,21 +320,39 @@ body{
 
 /* ================= FOOTER ================= */
 
-.footer{
-    position:fixed;
-    bottom:0;
-    width:100%;
-    background:#111;
-    display:flex;
-    justify-content:space-around;
-    padding:10px 0;
+.footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: #3a2f27;
+    padding: 8px 0;
+    display: flex;
+    justify-content: space-around;
+    border-radius: 12px 12px 0 0;
 }
 
-.footer a{
-    color:#fff;
-    text-decoration:none;
-    font-size:12px;
-    text-align:center;
+.footer a {
+    color: #bdbdbd;
+    text-decoration: none;
+    font-size: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 6px 0;
+}
+
+.footer i {
+    font-size: 20px;
+    margin-bottom: 4px;
+}
+
+.footer a.active {
+    color: #f4c277;
+}
+
+.footer a.active i {
+    color: #f4c277;
 }
 
 </style>
