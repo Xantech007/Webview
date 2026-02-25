@@ -5,6 +5,8 @@
 <title>Home</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    
 <style>
 *{
     box-sizing:border-box;
@@ -69,24 +71,82 @@ body{
     100%{ transform:translateX(-100%); }
 }
 
-/* ================= ACTION SECTION ================= */
+/* ================= DASHBOARD ACTION SECTION ================= */
 
-.action-container{
+.dashboard-container{
     margin:20px;
-    padding:20px 10px;
-    border-radius:15px;
+    padding:20px;
+    border-radius:18px;
     background:linear-gradient(135deg,#3a2b20,#5a402e);
-    display:flex;
-    justify-content:space-around;
-    align-items:center;
-    box-shadow:0 4px 12px rgba(0,0,0,0.2);
+    box-shadow:0 6px 18px rgba(0,0,0,0.3);
     color:#fff;
 }
 
-.action-card{
+/* Top row */
+.dashboard-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:15px;
+}
+
+.user-email{
+    font-size:14px;
+    opacity:0.9;
+}
+
+.vip-badge{
+    background:#f6c27a;
+    color:#000;
+    padding:3px 8px;
+    font-size:12px;
+    border-radius:12px;
+    margin-left:8px;
+    font-weight:bold;
+}
+
+/* Wallet button */
+.wallet-btn{
+    width:38px;
+    height:38px;
+    background:#111;
+    border-radius:50%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    color:#fff;
+    text-decoration:none;
+    font-size:16px;
+}
+
+/* Balance */
+.balance-box{
+    background:#111;
+    padding:15px;
+    border-radius:30px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:10px;
+    font-size:16px;
+    margin-bottom:20px;
+}
+
+.balance-box strong{
+    font-size:20px;
+    color:#f6c27a;
+}
+
+/* Action icons */
+.dashboard-actions{
+    display:flex;
+    justify-content:space-between;
+    text-align:center;
+}
+
+.action-item{
     text-decoration:none;
     color:#fff;
-    text-align:center;
     flex:1;
 }
 
@@ -99,15 +159,13 @@ body{
     display:flex;
     justify-content:center;
     align-items:center;
-    font-size:22px;
+    font-size:20px;
     box-shadow:0 4px 10px rgba(0,0,0,0.4);
 }
 
-.action-card span{
+.action-item span{
     font-size:13px;
-    display:block;
 }
-
 /* ================= SMOOTH SLIDER ================= */
 
 .banner-slider{
