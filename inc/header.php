@@ -408,6 +408,12 @@ body{
     color: #e4b060;
 }
 
+/* Prevent content from hiding behind fixed header + footer */
+body {
+    padding-top: 75px;   /* adjust to match your header height */
+    padding-bottom: 90px; /* adjust to match your footer height */
+}
+
 </style>
 </head>
 <body>
