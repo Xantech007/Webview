@@ -261,6 +261,35 @@ body{
     0% { transform:translateY(0); }
     100% { transform:translateY(-50%); }
 }
+
+/* ================= REGULATORY AUTHORITY ================= */
+
+.reg-section{
+    margin:20px; /* same as other sections */
+}
+
+.reg-title{
+    font-size:18px;
+    font-weight:bold;
+    margin-bottom:15px;
+}
+
+.reg-container{
+    background:#fff;
+    border-radius:15px;
+    padding:20px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    box-shadow:0 2px 8px rgba(0,0,0,0.05);
+}
+
+.reg-container img{
+    width:48%;
+    height:auto;
+    object-fit:contain;
+}
+
     
 </style>
 </head>
