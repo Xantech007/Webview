@@ -1,9 +1,28 @@
 <div class="footer">
-    <a href="index.php">Home</a>
-    <a href="#">Task</a>
-    <a href="#">Team</a>
-    <a href="#">VIP</a>
-    <a href="#">Me</a>
+    <a href="index.php" class="active">
+        <i class="fa-solid fa-house"></i>
+        <span>Home</span>
+    </a>
+
+    <a href="#">
+        <i class="fa-solid fa-list-check"></i>
+        <span>Task</span>
+    </a>
+
+    <a href="#">
+        <i class="fa-solid fa-people-group"></i>
+        <span>Team</span>
+    </a>
+
+    <a href="#">
+        <i class="fa-solid fa-crown"></i>
+        <span>VIP</span>
+    </a>
+
+    <a href="#">
+        <i class="fa-solid fa-user"></i>
+        <span>Me</span>
+    </a>
 </div>
 
 <script>
