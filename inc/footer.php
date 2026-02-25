@@ -50,6 +50,22 @@ document.addEventListener("scroll", function () {
         header.classList.remove("scrolled");
     }
 });
+
+
+function adjustSpacing() {
+    const header = document.querySelector('.header');
+    const footer = document.querySelector('.footer-wrapper');
+
+    const headerHeight = header.offsetHeight;
+    const footerHeight = footer.offsetHeight;
+
+    document.body.style.paddingTop = headerHeight + "px";
+    document.body.style.paddingBottom = footerHeight + "px";
+}
+
+window.onload = adjustSpacing;
+window.onresize = adjustSpacing;
+    
 </script>
 
 </body>
