@@ -332,7 +332,7 @@ body{
 
 /* Rounded footer bar */
 .footer {
-    background: #3a2b20;
+    background: linear-gradient(135deg,#3a2b20,#5a402e);
     padding: 12px 0;
     display: flex;
     justify-content: space-around;
