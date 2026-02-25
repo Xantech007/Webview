@@ -74,7 +74,7 @@ body{
 
 /* Brown header background when scrolling */
 .header.scrolled {
-    background: #3a2f27;
+    background: linear-gradient(135deg,#3a2b20,#5a402e);
     backdrop-filter: blur(4px);
 }
 
