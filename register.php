@@ -194,7 +194,7 @@ text-align:center;
 <div class="box">
 
 <img src="assets/images/wallet.png" class="bg">
-<img src="assets/images/logo.png" class="logo">
+<img src="assets/images/logo.webp" class="logo">
 
 <div class="title">Create Account</div>
 
