@@ -212,7 +212,7 @@ body{
 
 <div class="login-wrapper">
 
-<img src="assets/images/wallet.img" class="bg-float">
+<img src="assets/images/wallet.png" class="bg-float">
 
 <div class="logo">
     <img src="assets/images/logo.webp">
