@@ -6,16 +6,15 @@ $error="";
 
 if($_SERVER["REQUEST_METHOD"]=="POST"){
 
-    $login = trim($_POST['login']);
-    $password = $_POST['password'];
+    $login=$_POST['login'];
+    $password=$_POST['password'];
 
-    $stmt=$pdo->prepare("
-        SELECT * FROM users
-        WHERE email=:login OR phone=:login
-        LIMIT 1
-    ");
+    $stmt=$pdo->prepare(
+        "SELECT * FROM users
+        WHERE email=? OR phone=? LIMIT 1"
+    );
 
-    $stmt->execute(['login'=>$login]);
+    $stmt->execute([$login,$login]);
     $user=$stmt->fetch(PDO::FETCH_ASSOC);
 
     if($user && password_verify($password,$user['password'])){
@@ -23,180 +22,157 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
         header("Location: dashboard.php");
         exit;
     }else{
-        $error="Invalid login details";
+        $error="Invalid credentials";
     }
 }
 ?>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-
-<title>Login</title>
 
 <link rel="stylesheet"
 href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
+<title>Login</title>
+
 <style>
 
-/* ================= BODY ================= */
 body{
-    margin:0;
-    font-family:Arial, sans-serif;
-    background:#0f1115;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    min-height:100vh;
+margin:0;
+background:#0f1115;
+font-family:Arial;
+display:flex;
+justify-content:center;
+align-items:center;
+min-height:100vh;
 }
 
-/* ================= WRAPPER ================= */
-.login-wrapper{
-    width:100%;
-    max-width:650px;
-    padding:40px;
+/* ===== BIG DESKTOP ===== */
+.wrapper{
+width:100%;
+max-width:650px;
+padding:40px;
 }
 
-.login-box{
-    position:relative;
-    background:#14161c;
-    border-radius:22px;
-    padding:60px 45px;
-    overflow:hidden;
-    box-shadow:0 0 40px rgba(0,0,0,.6);
+.box{
+background:#14161c;
+border-radius:20px;
+padding:60px 45px;
+position:relative;
+overflow:hidden;
+box-shadow:0 0 40px rgba(0,0,0,.6);
 }
 
-/* ================= FLOAT IMAGE ================= */
-/* reduced by 50% */
-.bg-animation{
-    position:absolute;
-    bottom:-10px;
-    right:-20px;
-    width:160px;
-    opacity:.25;
-    animation:float 4s ease-in-out infinite;
+/* FLOAT IMAGE */
+.bg{
+position:absolute;
+right:-40px;
+bottom:-20px;
+width:340px;
+opacity:.25;
+animation:float 4s ease-in-out infinite;
 }
 
 @keyframes float{
-0%{transform:translateY(0)}
-50%{transform:translateY(-18px)}
-100%{transform:translateY(0)}
+0%,100%{transform:translateY(0)}
+50%{transform:translateY(-20px)}
 }
 
-/* ================= LOGO ================= */
+/* LOGO */
 .logo{
-    width:110px;
-    height:110px;
-    border-radius:50%;
-    object-fit:cover;
-    display:block;
-    margin:auto;
+width:110px;
+height:110px;
+display:block;
+margin:auto;
+border-radius:50%;
+object-fit:cover;
 }
 
-/* ================= TITLE ================= */
 .title{
-    text-align:center;
-    color:#f0b24b;
-    font-size:30px;
-    margin:20px 0 30px;
+text-align:center;
+color:#f0b24b;
+font-size:30px;
+margin:15px 0 30px;
 }
 
-/* ================= LOGIN TABS ================= */
+/* TABS */
 .tabs{
-    display:flex;
-    margin-bottom:25px;
+display:flex;
+margin-bottom:25px;
 }
 
 .tabs div{
-    flex:1;
-    text-align:center;
-    padding:12px;
-    color:#aaa;
-    cursor:pointer;
-    border-bottom:2px solid transparent;
+flex:1;
+text-align:center;
+padding:12px;
+color:#aaa;
+cursor:pointer;
+border-bottom:2px solid transparent;
 }
 
 .tabs .active{
-    color:#fff;
-    border-bottom:2px solid white;
+color:#fff;
+border-color:#fff;
 }
 
-/* ================= INPUT ================= */
-.input-group{
-    margin-bottom:20px;
+/* INPUT */
+.input{
+display:flex;
+align-items:center;
+background:rgba(240,178,75,.25);
+padding:15px;
+border-radius:10px;
+margin-bottom:18px;
+backdrop-filter:blur(6px);
 }
 
-.input-box{
-    display:flex;
-    align-items:center;
-    padding:15px;
-    border-radius:10px;
-    background:rgba(240,178,75,.25);
-    backdrop-filter:blur(8px);
+.input i{
+color:white;
+margin-right:10px;
 }
 
-.input-box i{
-    color:white;
-    margin-right:10px;
+.input input{
+border:none;
+background:transparent;
+outline:none;
+color:white;
+flex:1;
+font-size:16px;
 }
 
-.input-box input{
-    flex:1;
-    border:none;
-    outline:none;
-    background:transparent;
-    color:white;
-    font-size:16px;
-}
-
-.eye{
-    cursor:pointer;
-}
-
-/* ================= BUTTON ================= */
+/* BUTTONS */
 .btn{
-    width:100%;
-    padding:16px;
-    border:none;
-    border-radius:30px;
-    font-size:17px;
-    cursor:pointer;
-    margin-top:12px;
+width:100%;
+padding:16px;
+border:none;
+border-radius:30px;
+font-size:17px;
+cursor:pointer;
+margin-top:10px;
 }
 
-/* solid buttons */
 .signin{
-    background:#f0b24b;
-    color:#fff;
+background:#f0b24b;
+color:#fff;
 }
 
 .signup{
-    background:#2a2a2a;
-    color:#fff;
+background:#2b2b2b;
+color:#fff;
 }
 
-/* ================= FORM SWITCH ================= */
 .form{
-    display:none;
+display:none;
 }
 
 .form.active{
-    display:block;
+display:block;
 }
 
 .error{
-    color:#ff4d4d;
-    text-align:center;
-}
-
-/* ================= DESKTOP ================= */
-@media(min-width:1000px){
-
-.title{
-font-size:34px;
-}
-
+color:red;
+text-align:center;
 }
 
 </style>
@@ -204,122 +180,96 @@ font-size:34px;
 
 <body>
 
-<div class="login-wrapper">
-<div class="login-box">
+<div class="wrapper">
+<div class="box">
 
-<img src="assets/images/wallet.png" class="bg-animation">
+<img src="assets/images/wallet.png" class="bg">
 <img src="assets/images/logo.webp" class="logo">
 
 <div class="title">BINANCE DIGITAL</div>
 
-<!-- LOGIN SWITCH -->
 <div class="tabs">
-<div id="emailTab" class="active"
-onclick="switchTab('email')">Email Login</div>
-
-<div id="phoneTab"
-onclick="switchTab('phone')">Phone Login</div>
+<div class="active" onclick="switchTab('email')">Email Login</div>
+<div onclick="switchTab('phone')">Phone Login</div>
 </div>
-
-<form method="POST">
 
 <!-- EMAIL LOGIN -->
-<div id="emailForm" class="form active">
+<form method="POST" id="email" class="form active">
 
-<div class="input-group">
-<div class="input-box">
-<i class="fa-solid fa-envelope"></i>
-<input type="email"
-name="login"
-placeholder="E-mail"
-required>
-</div>
+<div class="input">
+<i class="fa fa-envelope"></i>
+<input type="email" name="login"
+placeholder="E-mail" required>
 </div>
 
-<div class="input-group">
-<div class="input-box">
-<i class="fa-solid fa-lock"></i>
+<div class="input">
+<i class="fa fa-lock"></i>
 <input type="password"
 name="password"
-id="password1"
 placeholder="Password"
 required>
-
-<i class="fa-regular fa-eye eye"
-onclick="togglePassword('password1')"></i>
 </div>
-</div>
-
-</div>
-
-<!-- PHONE LOGIN -->
-<div id="phoneForm" class="form">
-
-<div class="input-group">
-<div class="input-box">
-<i class="fa-solid fa-phone"></i>
-<input type="text"
-name="login"
-placeholder="Phone Number">
-</div>
-</div>
-
-<div class="input-group">
-<div class="input-box">
-<i class="fa-solid fa-lock"></i>
-<input type="password"
-name="password"
-id="password2"
-placeholder="Password">
-
-<i class="fa-regular fa-eye eye"
-onclick="togglePassword('password2')"></i>
-</div>
-</div>
-
-</div>
-
-<?php if($error): ?>
-<p class="error"><?= $error ?></p>
-<?php endif; ?>
 
 <button class="btn signin">Sign In</button>
 
 <button type="button"
 class="btn signup"
-onclick="location.href='register.php'">
+onclick="location='register.php'">
 Sign Up
 </button>
 
 </form>
 
+<!-- PHONE LOGIN -->
+<form method="POST" id="phone" class="form">
+
+<div class="input">
+<i class="fa fa-phone"></i>
+<input type="text"
+name="login"
+placeholder="Phone Number"
+required>
+</div>
+
+<div class="input">
+<i class="fa fa-lock"></i>
+<input type="password"
+name="password"
+placeholder="Password"
+required>
+</div>
+
+<button class="btn signin">Sign In</button>
+
+<button type="button"
+class="btn signup"
+onclick="location='register.php'">
+Sign Up
+</button>
+
+</form>
+
+<?php if($error): ?>
+<p class="error"><?= $error ?></p>
+<?php endif; ?>
+
 </div>
 </div>
 
 <script>
+function switchTab(id){
 
-function switchTab(type){
+document.querySelectorAll('.form')
+.forEach(f=>f.classList.remove('active'));
 
-document.getElementById("emailTab").classList.remove("active");
-document.getElementById("phoneTab").classList.remove("active");
+document.getElementById(id)
+.classList.add('active');
 
-document.getElementById("emailForm").classList.remove("active");
-document.getElementById("phoneForm").classList.remove("active");
+document.querySelectorAll('.tabs div')
+.forEach(t=>t.classList.remove('active'));
 
-if(type==="email"){
-emailTab.classList.add("active");
-emailForm.classList.add("active");
-}else{
-phoneTab.classList.add("active");
-phoneForm.classList.add("active");
+event.target.classList.add('active');
 }
-}
-
-function togglePassword(id){
-let input=document.getElementById(id);
-input.type=input.type==="password"?"text":"password";
-}
-
 </script>
 
 </body>
