@@ -1,3 +1,43 @@
+<?php
+session_start();
+require_once "config/database.php";
+
+$error = "";
+
+if($_SERVER["REQUEST_METHOD"] == "POST"){
+
+    $login = trim($_POST['login']);
+    $password = $_POST['password'];
+
+    if(!empty($login) && !empty($password)){
+
+        $stmt = $pdo->prepare("
+            SELECT * FROM users
+            WHERE email = :login OR phone = :login
+            LIMIT 1
+        ");
+
+        $stmt->execute(['login'=>$login]);
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if($user && password_verify($password,$user['password'])){
+
+            $_SESSION['user_id'] = $user['id'];
+            $_SESSION['email'] = $user['email'];
+            $_SESSION['balance'] = $user['balance'];
+            $_SESSION['vip'] = $user['vip_level'];
+
+            header("Location: dashboard.php");
+            exit;
+
+        }else{
+            $error = "Invalid login credentials";
+        }
+    }
+}
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -172,10 +212,10 @@ body{
 
 <div class="login-wrapper">
 
-<img src="assets/images/wallet.png" class="bg-float">
+<img src="assets/images/wallet.img" class="bg-float">
 
 <div class="logo">
-    <img src="assets/images/logo.png">
+    <img src="assets/images/logo.webp">
 </div>
 
 <div class="brand">BINANCE DIGITAL</div>
