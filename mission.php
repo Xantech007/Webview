@@ -22,12 +22,6 @@ $remaining_tasks = 0;
 
 <?php include "inc/header.php"; ?>
 
-<div class="mission-header">
-<a href="index.php"><i class="fa fa-arrow-left"></i></a>
-<span>BINANCE DIGITAL</span>
-</div>
-
-
 <!-- RESET TIMER -->
 
 <div class="task-reset-box">
