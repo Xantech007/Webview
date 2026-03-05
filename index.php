@@ -62,40 +62,49 @@ $query = $pdo->query("SELECT title FROM news ORDER BY id DESC");
     <div class="dashboard-actions">
 
         <!-- Recharge -->
-        <a href="recharge.php" class="action-item">
-            <div class="icon-circle">
-                <i class="fa-solid fa-money-bill-wave"></i>
-            </div>
+        <div class="action-item">
+            <a href="recharge.php">
+                <div class="icon-circle">
+                    <i class="fa-solid fa-money-bill-wave"></i>
+                </div>
+            </a>
             <span>Recharge</span>
-        </a>
+        </div>
 
         <!-- Withdraw -->
-        <a href="withdraw.php" class="action-item">
-            <div class="icon-circle">
-                <i class="fa-solid fa-arrow-up-from-bracket"></i>
-            </div>
+        <div class="action-item">
+            <a href="withdraw.php">
+                <div class="icon-circle">
+                    <i class="fa-solid fa-arrow-up-from-bracket"></i>
+                </div>
+            </a>
             <span>Withdraw</span>
-        </a>
+        </div>
 
-        <!-- App Download -->
-        <a href="app.php" class="action-item">
-            <div class="icon-circle">
-                <i class="fa-solid fa-mobile-screen"></i>
-            </div>
+        <!-- App -->
+        <div class="action-item">
+            <a href="app.php">
+                <div class="icon-circle">
+                    <i class="fa-solid fa-mobile-screen"></i>
+                </div>
+            </a>
             <span>App</span>
-        </a>
+        </div>
 
         <!-- Company -->
-        <a href="company.php" class="action-item">
-            <div class="icon-circle">
-                <i class="fa-solid fa-building"></i>
-            </div>
+        <div class="action-item">
+            <a href="company.php">
+                <div class="icon-circle">
+                    <i class="fa-solid fa-building"></i>
+                </div>
+            </a>
             <span>Company Profile</span>
-        </a>
+        </div>
 
     </div>
 
 </div>
+
 <!-- ================= BANNER ================= -->
 
 <div class="banner-slider">
