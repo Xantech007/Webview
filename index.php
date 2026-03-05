@@ -11,17 +11,17 @@ require_once "config/database.php";
 /* Fetch logged in user */
 $user_id = $_SESSION['user_id'];
 
-$stmt = $conn->prepare("SELECT email, vip_level, balance FROM users WHERE id=?");
-$stmt->bind_param("i",$user_id);
-$stmt->execute();
-$user = $stmt->get_result()->fetch_assoc();
+$stmt = $pdo->prepare("SELECT email, vip_level, balance FROM users WHERE id=?");
+$stmt->execute([$user_id]);
+$user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-$user_email = $user['email'];
-$user_vip = "VIP".$user['vip_level'];
-$user_balance = $user['balance'];
+$user_email = $user['email'] ?? "Unknown";
+$user_vip = "VIP".($user['vip_level'] ?? 0);
+$user_balance = $user['balance'] ?? 0;
 
 /* Fetch news */
-$query = $conn->query("SELECT title FROM news ORDER BY id DESC");
+$query = $pdo->query("SELECT title FROM news ORDER BY id DESC");
+
 ?>
 
 <?php include "inc/header.php"; ?>
@@ -31,7 +31,7 @@ $query = $conn->query("SELECT title FROM news ORDER BY id DESC");
     <div class="news-marquee">
         <div class="news-content">
             <?php
-            while ($row = $query->fetch_assoc()) {
+            while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
                 echo "<span class='news-item'>" . htmlspecialchars($row['title']) . "</span>";
             }
             ?>
@@ -45,7 +45,7 @@ $query = $conn->query("SELECT title FROM news ORDER BY id DESC");
 
     <div class="dashboard-top">
         <div class="user-info">
-            <span class="user-email"><?php echo $user_email; ?></span>
+            <span class="user-email"><?php echo htmlspecialchars($user_email); ?></span>
             <span class="vip-badge"><?php echo $user_vip; ?></span>
         </div>
 
@@ -95,7 +95,7 @@ $query = $conn->query("SELECT title FROM news ORDER BY id DESC");
 </div>
 
 <?php
-$vipQuery = $conn->query("SELECT * FROM vip WHERE status = 1 ORDER BY id ASC");
+$vipQuery = $pdo->query("SELECT * FROM vip WHERE status = 1 ORDER BY id ASC");
 ?>
 
 <!-- ================= TASK HALL ================= -->
@@ -103,7 +103,7 @@ $vipQuery = $conn->query("SELECT * FROM vip WHERE status = 1 ORDER BY id ASC");
 <div class="task-section">
     <h2 class="task-title">Task Hall</h2>
 
-    <?php while($vip = $vipQuery->fetch_assoc()): ?>
+    <?php while($vip = $vipQuery->fetch(PDO::FETCH_ASSOC)): ?>
 
     <div class="task-card">
 
