@@ -414,6 +414,31 @@ body {
     padding-bottom: 90px; /* adjust to match your footer height */
 }
 
+
+.lock-icon{
+font-size:18px;
+color:#fff;
+margin-right:8px;
+}
+
+.vip-btn{
+background:#f0b24b;
+padding:8px 14px;
+border-radius:8px;
+color:#000;
+text-decoration:none;
+font-size:12px;
+}
+
+.vip-active{
+background:#2ecc71;
+padding:8px 14px;
+border-radius:8px;
+color:white;
+text-decoration:none;
+font-size:12px;
+}
+
 </style>
 </head>
 <body>
