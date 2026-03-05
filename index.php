@@ -16,15 +16,23 @@ $stmt->execute([$user_id]);
 $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
 $user_email = $user['email'] ?? "Unknown";
-$user_vip = "VIP".($user['vip_level'] ?? 0);
+$user_vip = "VIP".intval($user['vip_level'] ?? 0);
 $user_balance = $user['balance'] ?? 0;
 
 /* Fetch news */
 $query = $pdo->query("SELECT title FROM news ORDER BY id DESC");
 
+/* Fetch VIP plans */
+$vipQuery = $pdo->query("SELECT * FROM vip WHERE status = 1 ORDER BY id ASC");
+
+/* Fetch reset time */
+$resetStmt = $pdo->query("SELECT reset_time FROM task_reset LIMIT 1");
+$reset = $resetStmt->fetch(PDO::FETCH_ASSOC);
+$reset_time = strtotime($reset['reset_time']);
 ?>
 
 <?php include "inc/header.php"; ?>
+
 
 <?php if(isset($_SESSION['recharge_msg'])): ?>
 
@@ -49,6 +57,7 @@ unset($_SESSION['withdraw_msg']);
 
 <?php endif; ?>
 
+
 <!-- Scrolling News Section -->
 <div class="news-wrapper">
     <div class="news-marquee">
@@ -62,7 +71,8 @@ unset($_SESSION['withdraw_msg']);
     </div>
 </div>
 
-<!-- ================= DASHBOARD ACTION SECTION ================= -->
+
+<!-- DASHBOARD ACTION SECTION -->
 
 <div class="dashboard-container">
 
@@ -84,7 +94,6 @@ unset($_SESSION['withdraw_msg']);
 
     <div class="dashboard-actions">
 
-        <!-- Recharge -->
         <div class="action-item">
             <a href="recharge.php">
                 <div class="icon-circle">
@@ -94,7 +103,6 @@ unset($_SESSION['withdraw_msg']);
             <span>Recharge</span>
         </div>
 
-        <!-- Withdraw -->
         <div class="action-item">
             <a href="withdraw.php">
                 <div class="icon-circle">
@@ -104,7 +112,6 @@ unset($_SESSION['withdraw_msg']);
             <span>Withdraw</span>
         </div>
 
-        <!-- App -->
         <div class="action-item">
             <a href="app.php">
                 <div class="icon-circle">
@@ -114,7 +121,6 @@ unset($_SESSION['withdraw_msg']);
             <span>App</span>
         </div>
 
-        <!-- Company -->
         <div class="action-item">
             <a href="company.php">
                 <div class="icon-circle">
@@ -128,7 +134,8 @@ unset($_SESSION['withdraw_msg']);
 
 </div>
 
-<!-- ================= BANNER ================= -->
+
+<!-- BANNER -->
 
 <div class="banner-slider">
     <div class="banner-track">
@@ -137,11 +144,23 @@ unset($_SESSION['withdraw_msg']);
     </div>
 </div>
 
-<?php
-$vipQuery = $pdo->query("SELECT * FROM vip WHERE status = 1 ORDER BY id ASC");
-?>
 
-<!-- ================= TASK HALL ================= -->
+<!-- TASK RESET COUNTDOWN -->
+
+<div class="task-reset-container">
+
+<div class="reset-time" id="taskCountdown">
+00:00:00
+</div>
+
+<div class="reset-label">
+Task Reset Countdown
+</div>
+
+</div>
+
+
+<!-- TASK HALL -->
 
 <div class="task-section">
 <h2 class="task-title">Task Hall</h2>
@@ -182,13 +201,14 @@ Unlock amount <span>$<?php echo number_format($vip['activation_fee'],2); ?></spa
 
 </div>
 
-<!-- ================= MEMBER LIST ================= -->
+
+<!-- MEMBER LIST -->
 
 <div class="member-section">
-    <h2 class="member-title">Member list</h2>
+<h2 class="member-title">Member list</h2>
 
-    <div class="member-wrapper">
-        <div class="member-track">
+<div class="member-wrapper">
+<div class="member-track">
 
 <?php
 $members = [
@@ -221,33 +241,54 @@ $earning = rand(50,1500);
 
 <?php endforeach; ?>
 
-<?php foreach($members as $member):
-$earning = rand(50,1500);
-?>
-
-<div class="member-row">
-<div class="member-card">
-<div class="vip-level"><?php echo $member[0]; ?></div>
-<div class="earning">+$<?php echo number_format($earning,2); ?></div>
-<div class="email"><?php echo $member[1]; ?></div>
+</div>
 </div>
 </div>
 
-<?php endforeach; ?>
 
-        </div>
-    </div>
-</div>
-
-<!-- ================= REGULATORY AUTHORITY ================= -->
+<!-- REGULATORY AUTHORITY -->
 
 <div class="reg-section">
-    <h2 class="reg-title">Regulatory Authority</h2>
+<h2 class="reg-title">Regulatory Authority</h2>
 
-    <div class="reg-container">
-        <img src="assets/images/reg1.webp">
-        <img src="assets/images/reg2.webp">
-    </div>
+<div class="reg-container">
+<img src="assets/images/reg1.webp">
+<img src="assets/images/reg2.webp">
 </div>
+
+</div>
+
+
+<script>
+
+/* TASK RESET COUNTDOWN */
+
+var resetTime = <?php echo $reset_time * 1000; ?>;
+
+function updateCountdown(){
+
+var now = new Date().getTime();
+var distance = resetTime - now;
+
+if(distance < 0){
+location.reload();
+return;
+}
+
+var hours = Math.floor((distance % (1000*60*60*24)) / (1000*60*60));
+var minutes = Math.floor((distance % (1000*60*60)) / (1000*60));
+var seconds = Math.floor((distance % (1000*60)) / 1000);
+
+document.getElementById("taskCountdown").innerHTML =
+hours.toString().padStart(2,'0') + ":" +
+minutes.toString().padStart(2,'0') + ":" +
+seconds.toString().padStart(2,'0');
+
+}
+
+setInterval(updateCountdown,1000);
+
+</script>
+
 
 <?php include "inc/footer.php"; ?>
