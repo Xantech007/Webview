@@ -1364,50 +1364,115 @@ text-align:left;
 
 }
     
+/* ================= TEAM DETAILS PAGES ================= */
+
 .team-detail{
 margin:20px;
+color:#fff;
 }
+
+/* HEADER */
 
 .team-header{
 display:flex;
 align-items:center;
-margin-bottom:20px;
+padding:12px 0;
+margin-bottom:15px;
+}
+
+.team-header a{
+color:#fff;
+font-size:18px;
+text-decoration:none;
 }
 
 .team-header span{
 flex:1;
 text-align:center;
 font-size:18px;
+font-weight:500;
 }
 
-.team-header a{
-color:white;
-text-decoration:none;
+/* EMPTY STATE */
+
+.team-empty{
+background:linear-gradient(135deg,#3a2b20,#5a402e);
+padding:40px;
+border-radius:12px;
+text-align:center;
+opacity:.7;
 }
+
+/* MEMBER CARD */
 
 .team-member{
 background:linear-gradient(135deg,#3a2b20,#5a402e);
 padding:15px;
-border-radius:10px;
-margin-bottom:10px;
+border-radius:12px;
+margin-bottom:12px;
+box-shadow:0 3px 10px rgba(0,0,0,0.2);
+transition:.2s;
 }
+
+.team-member:hover{
+transform:translateY(-2px);
+}
+
+/* MEMBER EMAIL */
+
+.team-member strong{
+font-size:14px;
+word-break:break-all;
+}
+
+/* INFO ROW */
 
 .member-info{
 font-size:13px;
+margin-top:4px;
 opacity:.9;
 }
 
+/* VIP BADGE */
+
+.member-info span{
+background:#f0b24b;
+color:#000;
+padding:2px 8px;
+border-radius:12px;
+font-size:11px;
+margin-right:5px;
+}
+
+/* DATE */
+
 .member-date{
 font-size:12px;
+margin-top:4px;
 opacity:.7;
 }
 
-.team-empty{
-text-align:center;
-padding:40px;
-opacity:.7;
+/* MOBILE */
+
+@media (max-width:600px){
+
+.team-member{
+padding:14px;
 }
 
+.team-header span{
+font-size:16px;
+}
+
+.member-info{
+font-size:12px;
+}
+
+.member-date{
+font-size:11px;
+}
+
+}
 
     
     
