@@ -1,44 +1,74 @@
 <?php
+session_start();
 require_once "config/database.php";
+
+/* Prevent logged users from opening register */
+if(isset($_SESSION['user_id'])){
+    header("Location: index.php");
+    exit;
+}
 
 $msg="";
 
 if($_SERVER["REQUEST_METHOD"]=="POST"){
 
 $type=$_POST['type'];
-$password=$_POST['password'];
-$confirm=$_POST['confirm'];
-$invite=$_POST['invite'];
+$password=trim($_POST['password']);
+$confirm=trim($_POST['confirm']);
+$invite=trim($_POST['invite']);
 
 if($password!=$confirm){
+
 $msg="Passwords do not match";
+
 }else{
 
 $hash=password_hash($password,PASSWORD_DEFAULT);
 
 if($type=="email"){
 
-$email=$_POST['email'];
+$email=trim($_POST['email']);
 
-$stmt=$pdo->prepare(
-"INSERT INTO users(email,password,invite_code)
-VALUES(?,?,?)");
+/* check if email exists */
+$check=$pdo->prepare("SELECT id FROM users WHERE email=?");
+$check->execute([$email]);
 
-$stmt->execute([$email,$hash,$invite]);
-
+if($check->rowCount()>0){
+$msg="Email already registered";
 }else{
 
-$phone=$_POST['phone'];
-
 $stmt=$pdo->prepare(
-"INSERT INTO users(phone,password,invite_code)
-VALUES(?,?,?)");
+"INSERT INTO users(email,password,invite_code,vip_level,balance)
+VALUES(?,?,?,?,?)");
 
-$stmt->execute([$phone,$hash,$invite]);
-}
+$stmt->execute([$email,$hash,$invite,0,0]);
 
 header("Location: login.php");
 exit;
+}
+
+}else{
+
+$phone=trim($_POST['phone']);
+
+/* check if phone exists */
+$check=$pdo->prepare("SELECT id FROM users WHERE phone=?");
+$check->execute([$phone]);
+
+if($check->rowCount()>0){
+$msg="Phone number already registered";
+}else{
+
+$stmt=$pdo->prepare(
+"INSERT INTO users(phone,password,invite_code,vip_level,balance)
+VALUES(?,?,?,?,?)");
+
+$stmt->execute([$phone,$hash,$invite,0,0]);
+
+header("Location: login.php");
+exit;
+}
+}
 }
 }
 ?>
@@ -183,6 +213,7 @@ display:block;
 .msg{
 color:red;
 text-align:center;
+margin-top:10px;
 }
 
 </style>
@@ -199,11 +230,11 @@ text-align:center;
 <div class="title">Create Account</div>
 
 <div class="tabs">
-<div class="active" onclick="switchTab('emailForm')">
+<div class="active" onclick="switchTab(event,'emailForm')">
 Email Sign Up
 </div>
 
-<div onclick="switchTab('phoneForm')">
+<div onclick="switchTab(event,'phoneForm')">
 Phone Sign Up
 </div>
 </div>
@@ -294,14 +325,14 @@ placeholder="Invitation Code">
 </form>
 
 <?php if($msg): ?>
-<p class="msg"><?= $msg ?></p>
+<p class="msg"><?= htmlspecialchars($msg) ?></p>
 <?php endif; ?>
 
 </div>
 </div>
 
 <script>
-function switchTab(id){
+function switchTab(event,id){
 
 document.querySelectorAll('.form')
 .forEach(f=>f.classList.remove('active'));
