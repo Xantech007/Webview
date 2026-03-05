@@ -945,6 +945,12 @@ font-size:15px;
 }
 
 }
+
+.method input:checked + img{
+border:2px solid #f0b24b;
+box-shadow:0 0 8px #f0b24b;
+}
+
     
 </style>
 </head>
