@@ -878,6 +878,14 @@ object-fit:contain;
 border:2px solid #f0b24b;
 border-radius:6px;
 }
+
+.withdraw-header a{
+color:#fff;
+text-decoration:none;
+font-size:18px;
+}
+
+
     
 </style>
 </head>
