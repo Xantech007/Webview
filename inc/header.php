@@ -1474,6 +1474,102 @@ font-size:11px;
 
 }
 
+/* VIP PAGE */
+
+.vip-container{
+margin:20px;
+}
+
+.vip-card{
+background:linear-gradient(135deg,#3a2b20,#5a402e);
+padding:18px;
+border-radius:12px;
+display:flex;
+align-items:center;
+margin-bottom:18px;
+position:relative;
+}
+
+.vip-label{
+position:absolute;
+top:0;
+left:0;
+background:#ff6b6b;
+padding:3px 10px;
+font-size:12px;
+border-radius:0 0 8px 0;
+}
+
+.vip-left img{
+width:55px;
+margin-right:15px;
+}
+
+.vip-info{
+flex:1;
+font-size:13px;
+}
+
+.vip-info div{
+display:flex;
+justify-content:space-between;
+margin-bottom:6px;
+}
+
+.green{
+color:#00e676;
+}
+
+.vip-action button{
+background:#f0b24b;
+border:none;
+padding:8px 14px;
+border-radius:20px;
+cursor:pointer;
+font-size:12px;
+}
+
+.vip-active{
+background:#777;
+}
+
+/* POPUP */
+
+.vip-popup{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,.6);
+display:none;
+align-items:center;
+justify-content:center;
+}
+
+.popup-box{
+background:#222;
+padding:20px;
+border-radius:10px;
+text-align:center;
+}
+
+.confirm-btn{
+background:#f0b24b;
+border:none;
+padding:10px 20px;
+border-radius:20px;
+margin-right:10px;
+}
+
+.cancel-btn{
+background:#444;
+border:none;
+padding:10px 20px;
+border-radius:20px;
+color:white;
+}
+
     
     
 </style>
