@@ -41,47 +41,27 @@ $query = $pdo->query("SELECT title FROM news ORDER BY id DESC");
 
 <!-- ================= DASHBOARD ACTION SECTION ================= -->
 
-<div class="dashboard-container">
+<div class="dashboard-actions">
 
-    <div class="dashboard-top">
-        <div class="user-info">
-            <span class="user-email"><?php echo htmlspecialchars($user_email); ?></span>
-            <span class="vip-badge"><?php echo $user_vip; ?></span>
-        </div>
+<a href="recharge.php" class="action-item">
+<div class="icon-circle"><i class="fa-solid fa-money-bill-wave"></i></div>
+<span>Recharge</span>
+</a>
 
-        <a href="wallet.php" class="wallet-btn">
-            <i class="fa-solid fa-wallet"></i>
-        </a>
-    </div>
+<a href="withdraw.php" class="action-item">
+<div class="icon-circle"><i class="fa-solid fa-arrow-up-from-bracket"></i></div>
+<span>Withdraw</span>
+</a>
 
-    <div class="balance-box">
-        <span>Balance</span>
-        <strong>$<?php echo number_format($user_balance,2); ?></strong>
-    </div>
+<a href="app.php" class="action-item">
+<div class="icon-circle"><i class="fa-solid fa-mobile-screen"></i></div>
+<span>App</span>
+</a>
 
-    <div class="dashboard-actions">
-
-        <a href="#" class="action-item">
-            <div class="icon-circle"><i class="fa-solid fa-money-bill-wave"></i></div>
-            <span>Recharge</span>
-        </a>
-
-        <a href="#" class="action-item">
-            <div class="icon-circle"><i class="fa-solid fa-arrow-up-from-bracket"></i></div>
-            <span>Withdraw</span>
-        </a>
-
-        <a href="#" class="action-item">
-            <div class="icon-circle"><i class="fa-solid fa-mobile-screen"></i></div>
-            <span>App</span>
-        </a>
-
-        <a href="#" class="action-item">
-            <div class="icon-circle"><i class="fa-solid fa-building"></i></div>
-            <span>Company Profile</span>
-        </a>
-
-    </div>
+<a href="company.php" class="action-item">
+<div class="icon-circle"><i class="fa-solid fa-building"></i></div>
+<span>Company Profile</span>
+</a>
 
 </div>
 
