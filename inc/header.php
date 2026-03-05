@@ -1719,6 +1719,101 @@ padding:6px 12px;
 }
 
 }
+
+/* ================= MINE PAGE ================= */
+
+.mine-container{
+margin:20px;
+color:#fff;
+}
+
+
+/* HEADER */
+
+.mine-header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:20px;
+}
+
+.mine-user h3{
+margin:0;
+font-size:16px;
+}
+
+.vip-badge{
+background:#f0b24b;
+color:#000;
+padding:3px 10px;
+border-radius:10px;
+font-size:12px;
+margin-top:5px;
+display:inline-block;
+}
+
+.mine-usdt img{
+width:70px;
+border-radius:10px;
+}
+
+
+/* BALANCE BOX */
+
+.mine-balance{
+background:linear-gradient(90deg,#e6cf9b,#e7b55f);
+padding:20px;
+border-radius:12px;
+display:flex;
+justify-content:space-between;
+text-align:center;
+color:#000;
+margin-bottom:20px;
+}
+
+.mine-balance p{
+margin:0;
+font-size:12px;
+}
+
+.mine-balance h2{
+margin:5px 0 0;
+font-size:20px;
+}
+
+
+/* MENU */
+
+.mine-menu{
+background:#111;
+border-radius:10px;
+overflow:hidden;
+}
+
+.menu-item{
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding:16px;
+color:#fff;
+text-decoration:none;
+border-bottom:1px solid #333;
+}
+
+.menu-item span{
+flex:1;
+margin-left:12px;
+}
+
+.menu-item i:first-child{
+width:30px;
+text-align:center;
+}
+
+.menu-item:hover{
+background:#1b1b1b;
+}
+
     
 </style>
 </head>
