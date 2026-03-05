@@ -5,45 +5,56 @@
             <span>Home</span>
         </a>
 
-        <a href="#">
+        <a href="mission.php">
             <i class="fa-solid fa-list-check"></i>
             <span>Task</span>
         </a>
 
-        <a href="#">
+        <a href="team.php">
             <i class="fa-solid fa-people-group"></i>
             <span>Team</span>
         </a>
 
-        <a href="#">
+        <a href="vip.php">
             <i class="fa-solid fa-crown"></i>
             <span>VIP</span>
         </a>
 
-        <a href="#">
+        <a href="mine.php">
             <i class="fa-solid fa-user"></i>
             <span>Me</span>
         </a>
     </div>
 </div>
+
 <script>
-window.onload = function(){
+
+/* BANNER SLIDER */
+
+window.addEventListener("load", function(){
 
     var track = document.querySelector(".banner-track");
     var slides = document.querySelectorAll(".banner-track img");
-    var current = 0;
 
-    if(slides.length < 2) return;
+    if(!track || slides.length < 2) return;
+
+    var current = 0;
 
     setInterval(function(){
         current = (current + 1) % slides.length;
         track.style.transform = "translateX(-" + (current * 100) + "%)";
-    }, 1500);
+    },1500);
 
-};
+});
+
+
+/* HEADER SCROLL EFFECT */
 
 document.addEventListener("scroll", function () {
     const header = document.getElementById("header");
+
+    if(!header) return;
+
     if (window.scrollY > 10) {
         header.classList.add("scrolled");
     } else {
@@ -52,9 +63,14 @@ document.addEventListener("scroll", function () {
 });
 
 
+/* HEADER + FOOTER SPACING */
+
 function adjustSpacing() {
+
     const header = document.querySelector('.header');
     const footer = document.querySelector('.footer-wrapper');
+
+    if(!header || !footer) return;
 
     const headerHeight = header.offsetHeight;
     const footerHeight = footer.offsetHeight;
@@ -63,9 +79,9 @@ function adjustSpacing() {
     document.body.style.paddingBottom = footerHeight + "px";
 }
 
-window.onload = adjustSpacing;
-window.onresize = adjustSpacing;
-    
+window.addEventListener("load", adjustSpacing);
+window.addEventListener("resize", adjustSpacing);
+
 </script>
 
 </body>
