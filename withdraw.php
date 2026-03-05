@@ -178,6 +178,18 @@ BEP20, POLYGON minimum withdrawal is $1
 
 </div>
 
+<script>
+function goBack(){
+
+if(document.referrer){
+window.history.back();
+}else{
+window.location.href="index.php";
+}
+
+}
+</script>
+
 <?php include "inc/footer.php"; ?>
 
 <script>
