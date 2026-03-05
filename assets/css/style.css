@@ -2287,6 +2287,52 @@ color:#4CAF50;
 text-align:center;
 }
 
+/* LANGUAGE BUTTON */
+
+.lang-btn{
+position:relative;
+display:flex;
+align-items:center;
+gap:6px;
+background:#3a2b20;
+padding:6px 10px;
+border-radius:8px;
+cursor:pointer;
+font-size:13px;
+}
+
+/* ORANGE GLOBE */
+
+.lang-btn .fa-globe{
+color:#f0b24b;
+}
+
+
+/* DROPDOWN */
+
+.lang-dropdown{
+display:none;
+position:absolute;
+top:38px;
+right:0;
+background:#1c1c1c;
+border-radius:8px;
+width:150px;
+overflow:hidden;
+box-shadow:0 5px 15px rgba(0,0,0,0.5);
+z-index:999;
+}
+
+.lang-dropdown div{
+padding:10px;
+color:#fff;
+cursor:pointer;
+font-size:13px;
+}
+
+.lang-dropdown div:hover{
+background:#333;
+}
     
     
 </style>
