@@ -1474,36 +1474,68 @@ font-size:11px;
 
 }
 
-/* VIP PAGE */
+/* ================= VIP PAGE ================= */
 
 .vip-container{
 margin:20px;
 }
 
+
+/* SUCCESS MESSAGE */
+
+.vip-success{
+background:#4CAF50;
+color:#fff;
+padding:12px;
+border-radius:10px;
+text-align:center;
+margin-bottom:15px;
+font-size:14px;
+}
+
+
+/* VIP CARD */
+
 .vip-card{
 background:linear-gradient(135deg,#3a2b20,#5a402e);
-padding:18px;
-border-radius:12px;
+padding:20px;
+border-radius:14px;
+margin-bottom:18px;
 display:flex;
 align-items:center;
-margin-bottom:18px;
 position:relative;
+color:#fff;
 }
+
+
+/* VIP LABEL */
 
 .vip-label{
 position:absolute;
 top:0;
 left:0;
-background:#ff6b6b;
-padding:3px 10px;
+background:linear-gradient(90deg,#f7c948,#ff6b6b);
+padding:4px 12px;
 font-size:12px;
-border-radius:0 0 8px 0;
+font-weight:bold;
+border-radius:0 0 10px 0;
+color:#000;
+}
+
+
+/* VIP ICON */
+
+.vip-left{
+margin-right:15px;
 }
 
 .vip-left img{
 width:55px;
-margin-right:15px;
+height:auto;
 }
+
+
+/* VIP INFO */
 
 .vip-info{
 flex:1;
@@ -1516,8 +1548,26 @@ justify-content:space-between;
 margin-bottom:6px;
 }
 
+.vip-info span{
+opacity:.85;
+}
+
+.vip-info strong{
+font-weight:600;
+}
+
+
+/* PROFIT COLOR */
+
 .green{
 color:#00e676;
+}
+
+
+/* ACTION BUTTON */
+
+.vip-action{
+margin-left:10px;
 }
 
 .vip-action button{
@@ -1525,15 +1575,22 @@ background:#f0b24b;
 border:none;
 padding:8px 14px;
 border-radius:20px;
-cursor:pointer;
 font-size:12px;
+cursor:pointer;
+white-space:nowrap;
+color:#fff;
 }
+
+
+/* ACTIVATED BUTTON */
 
 .vip-active{
-background:#777;
+background:#777 !important;
+cursor:default;
 }
 
-/* POPUP */
+
+/* ================= POPUP ================= */
 
 .vip-popup{
 position:fixed;
@@ -1541,18 +1598,32 @@ top:0;
 left:0;
 width:100%;
 height:100%;
-background:rgba(0,0,0,.6);
+background:rgba(0,0,0,.65);
 display:none;
 align-items:center;
 justify-content:center;
+z-index:999;
 }
+
+
+/* POPUP BOX */
 
 .popup-box{
 background:#222;
-padding:20px;
-border-radius:10px;
+padding:25px;
+border-radius:12px;
 text-align:center;
+width:260px;
+color:#fff;
 }
+
+.popup-box p{
+margin-bottom:20px;
+font-size:15px;
+}
+
+
+/* CONFIRM BUTTON */
 
 .confirm-btn{
 background:#f0b24b;
@@ -1560,16 +1631,45 @@ border:none;
 padding:10px 20px;
 border-radius:20px;
 margin-right:10px;
+cursor:pointer;
+color:#fff;
 }
+
+
+/* CANCEL BUTTON */
 
 .cancel-btn{
 background:#444;
 border:none;
 padding:10px 20px;
 border-radius:20px;
-color:white;
+color:#fff;
+cursor:pointer;
 }
 
+
+/* ================= MOBILE ================= */
+
+@media (max-width:600px){
+
+.vip-card{
+padding:18px;
+}
+
+.vip-left img{
+width:48px;
+}
+
+.vip-info{
+font-size:12px;
+}
+
+.vip-action button{
+font-size:11px;
+padding:6px 12px;
+}
+
+}
     
     
 </style>
