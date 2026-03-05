@@ -9,8 +9,6 @@ exit;
 
 $user_id = $_SESSION['user_id'];
 
-/* GET USER DATA */
-
 $stmt = $pdo->prepare("SELECT email,balance,vip_level FROM users WHERE id=?");
 $stmt->execute([$user_id]);
 $user = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -19,24 +17,18 @@ $email = $user['email'];
 $balance = $user['balance'];
 $vip = "VIP".$user['vip_level'];
 
-/* TOTAL RECHARGE */
-
 $stmt = $pdo->prepare("SELECT SUM(amount) as total FROM deposits WHERE user_id=? AND status='approved'");
 $stmt->execute([$user_id]);
 $recharge = $stmt->fetch(PDO::FETCH_ASSOC);
 
 $recharge_amount = $recharge['total'] ?? 0;
-
 ?>
 
 <?php include "inc/header.php"; ?>
 
+<div class="mine-wrapper">
 
-<div class="mine-container">
-
-<!-- USER INFO -->
-
-<div class="mine-header">
+<div class="mine-top">
 
 <div class="mine-user">
 
@@ -48,37 +40,38 @@ $recharge_amount = $recharge['total'] ?? 0;
 
 </div>
 
-<div class="mine-usdt">
+<div class="mine-gif">
+
 <img src="assets/images/usdt-gif.gif">
-</div>
 
 </div>
 
+</div>
 
-
-<!-- BALANCE BOX -->
 
 <div class="mine-balance">
 
-<div>
+<div class="balance-item">
 
 <p>Total balance (USDT)</p>
+
 <h2><?php echo number_format($balance,2); ?></h2>
 
 </div>
 
-<div>
+<div class="balance-item">
 
 <p>Recharge amount (USDT)</p>
+
 <h2><?php echo number_format($recharge_amount,2); ?></h2>
 
 </div>
 
 </div>
 
+</div>
 
 
-<!-- MENU LIST -->
 
 <div class="mine-menu">
 
@@ -125,8 +118,5 @@ $recharge_amount = $recharge['total'] ?? 0;
 </a>
 
 </div>
-
-</div>
-
 
 <?php include "inc/footer.php"; ?>
