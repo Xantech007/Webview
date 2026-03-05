@@ -885,7 +885,15 @@ text-decoration:none;
 font-size:18px;
 }
 
-
+.withdraw-success{
+margin:20px;
+background:#3498db;
+color:#fff;
+padding:15px;
+border-radius:10px;
+text-align:center;
+font-size:14px;
+}
     
 </style>
 </head>
