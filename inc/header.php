@@ -1879,6 +1879,73 @@ font-size:14px;
 .menu-item:hover{
 background:#1b1b1b;
 }
+
+/* ================= BALANCE PAGE ================= */
+
+.balance-header{
+padding:15px;
+}
+
+.balance-header a{
+color:#fff;
+font-size:18px;
+text-decoration:none;
+}
+
+
+/* MAIN CONTAINER */
+
+.balance-container{
+margin:15px;
+}
+
+
+/* BALANCE CARD */
+
+.balance-card{
+background:linear-gradient(135deg,#3a2b20,#5a402e);
+border-radius:12px;
+padding:20px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+color:#fff;
+}
+
+
+/* LEFT SIDE */
+
+.balance-left{
+display:flex;
+flex-direction:column;
+gap:20px;
+}
+
+.balance-item p{
+margin:0;
+font-size:12px;
+opacity:.8;
+}
+
+.balance-item h3{
+margin-top:4px;
+font-size:18px;
+font-weight:600;
+}
+
+.balance-item span{
+color:#f0b24b;
+margin-left:4px;
+}
+
+
+/* RIGHT IMAGE */
+
+.balance-right img{
+width:80px;
+height:auto;
+}
+
     
 </style>
 </head>
