@@ -9,14 +9,6 @@ exit;
 
 $user_id=$_SESSION['user_id'];
 
-/* GET USER */
-
-$stmt=$pdo->prepare("SELECT balance FROM users WHERE id=?");
-$stmt->execute([$user_id]);
-$user=$stmt->fetch(PDO::FETCH_ASSOC);
-
-$balance=$user['balance'];
-
 
 /* AUTO EXPIRE ALL VIPs */
 
@@ -27,7 +19,17 @@ WHERE end_time <= NOW()
 ")->execute();
 
 
-/* GET ACTIVE VIPs */
+/* GET USER */
+
+$stmt=$pdo->prepare("SELECT balance,vip_level FROM users WHERE id=?");
+$stmt->execute([$user_id]);
+$user=$stmt->fetch(PDO::FETCH_ASSOC);
+
+$balance=$user['balance'];
+$current_vip_level=$user['vip_level'];
+
+
+/* GET ACTIVE VIPS */
 
 $stmt=$pdo->prepare("
 SELECT * FROM user_vip
@@ -58,10 +60,12 @@ exit;
 
 }
 
-/* START TIME (+5 HOURS) */
+
+/* START +5 HOURS */
 
 $start=date("Y-m-d H:i:s",strtotime("+5 hours"));
 $end=date("Y-m-d H:i:s",strtotime("+$duration days +5 hours"));
+
 
 /* DEDUCT BALANCE */
 
@@ -70,12 +74,29 @@ $new_balance=$balance-$fee;
 $pdo->prepare("UPDATE users SET balance=? WHERE id=?")
 ->execute([$new_balance,$user_id]);
 
+
 /* SAVE VIP */
 
 $pdo->prepare("
 INSERT INTO user_vip (user_id,vip_id,start_time,end_time,status)
 VALUES (?,?,?,?,1)
 ")->execute([$user_id,$vip_id,$start,$end]);
+
+
+/* UPDATE USER VIP LEVEL (ONLY IF HIGHER) */
+
+if($vip_id > $current_vip_level){
+
+$pdo->prepare("
+UPDATE users
+SET vip_level=?
+WHERE id=?
+")->execute([$vip_id,$user_id]);
+
+}
+
+
+/* SUCCESS MESSAGE */
 
 $_SESSION['vip_msg']="VIP $vip_id activated";
 
@@ -115,14 +136,17 @@ unset($_SESSION['vip_msg']);
 <?php
 
 $isActive=false;
-$vipData=null;
+$start_time="";
+$end_time="";
 
 foreach($active_vips as $a){
 
 if($a['vip_id']==$vip['id']){
 
 $isActive=true;
-$vipData=$a;
+$start_time=$a['start_time'];
+$end_time=$a['end_time'];
+
 break;
 
 }
@@ -193,11 +217,11 @@ VIP<?php echo $vip['id']; ?>
 
 Effective time:
 
-<?php echo date("d/m/Y H:i:s",strtotime($vipData['start_time'])); ?>
+<?php echo date("d/m/Y H:i:s",strtotime($start_time)); ?>
 
 -
 
-<?php echo date("d/m/Y H:i:s",strtotime($vipData['end_time'])); ?>
+<?php echo date("d/m/Y H:i:s",strtotime($end_time)); ?>
 
 </div>
 
