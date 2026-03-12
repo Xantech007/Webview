@@ -2544,6 +2544,99 @@ font-size:13px;
 .lang-dropdown div:hover{
 background:#333;
 }
-    
+
+
+/* ================= MOBILE FIX ================= */
+
+@media (max-width:768px){
+
+.vip-task-card{
+flex-direction:row;
+align-items:flex-start;
+padding:16px;
+min-height:160px;
+}
+
+
+/* LEFT COLUMN (IMAGE + BUTTON) */
+
+.vip-task-card img{
+width:55px;
+margin-bottom:8px;
+}
+
+.vip-task-card form,
+.vip-task-card .complete-btn{
+display:block;
+margin-top:6px;
+}
+
+.vip-task-card > img,
+.vip-task-card > form,
+.vip-task-card > .complete-btn{
+flex-shrink:0;
+}
+
+
+/* create left column */
+
+.vip-task-card{
+display:grid;
+grid-template-columns:70px 1fr;
+gap:10px;
+}
+
+.vip-task-card img{
+grid-column:1;
+}
+
+.vip-task-card form,
+.vip-task-card .complete-btn{
+grid-column:1;
+width:100%;
+}
+
+.vip-task-info{
+grid-column:2;
+}
+
+
+/* BUTTON STYLE */
+
+.complete-btn{
+width:100%;
+padding:8px 10px;
+font-size:12px;
+border-radius:14px;
+}
+
+
+/* TEXT SIZE REDUCTION */
+
+.vip-task-info h3{
+font-size:15px;
+}
+
+.vip-grid span{
+font-size:11px;
+}
+
+.vip-grid strong{
+font-size:12px;
+}
+
+.progress-time{
+font-size:11px;
+}
+
+
+/* EXPAND CARD HEIGHT */
+
+.vip-task-card{
+min-height:170px;
+}
+
+}
+
     
 </style>
