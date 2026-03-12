@@ -94,6 +94,22 @@ $stmt = $pdo->query("SELECT reset_time FROM task_reset LIMIT 1");
 $reset = $stmt->fetch(PDO::FETCH_ASSOC);
 
 $reset_time = strtotime($reset['reset_time']);
+$now = time();
+
+/* IF RESET TIME EXPIRED → ADD 12 HOURS */
+
+if($reset_time <= $now){
+
+$new_reset = date("Y-m-d H:i:s", strtotime("+12 hours"));
+
+$pdo->prepare("
+UPDATE task_reset
+SET reset_time=?
+")->execute([$new_reset]);
+
+$reset_time = strtotime($new_reset);
+
+}
 
 
 /* GET RUNNING VIP */
