@@ -1,6 +1,6 @@
 <?php
 // admin/dashboard.php
-require_once __DIR__ . '/inc/header2.php';
+require_once __DIR__ . '/inc/header.php';
 
 // Fetch statistics using your REAL table structure
 try {
@@ -33,7 +33,11 @@ try {
 }
 ?>
 
-<main>
+<main style="margin-top: 1.5rem;">
+  <h1 style="text-align:center; margin-bottom:2.5rem; font-size:2.1rem;">
+    Dashboard Overview
+  </h1>
+
   <div class="stats-grid">
     <div class="card">
       <div class="card-icon" style="color:#58a6ff;">
@@ -68,7 +72,9 @@ try {
     </div>
   </div>
 
-  <h2 style="text-align:center; margin:2.5rem 0 1.8rem; font-size:1.6rem;">Management Sections</h2>
+  <h2 style="text-align:center; margin:3rem 0 1.8rem; font-size:1.7rem;">
+    Management Sections
+  </h2>
 
   <div class="actions-grid">
     <a href="manage-users.php"       class="btn"><i class="fas fa-user-friends"></i> Manage Users</a>
