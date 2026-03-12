@@ -1,15 +1,7 @@
 <?php
 // admin/manage-users.php
 require_once __DIR__ . '/inc/header.php';
-
-// Load countries from ../inc/countries.php
-$countries_file = __DIR__ . '/../inc/countries.php';
-$countries = file_exists($countries_file) ? include $countries_file : [];
-
-// Make sure it's an array
-if (!is_array($countries)) {
-    $countries = [];
-}
+require_once __DIR__ . '/inc/countries.php'; // ← added
 
 // Handle form submission (update user)
 $message = '';
@@ -22,7 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_user'])) {
     } else {
         $email             = trim($_POST['email'] ?? '');
         $phone             = trim($_POST['phone'] ?? '');
-        $country           = trim($_POST['country'] ?? '');           // ← from dropdown
+        $country           = trim($_POST['country'] ?? '');           // ← new
         $vip_level         = (int)($_POST['vip_level'] ?? 0);
         $balance           = (float)($_POST['balance'] ?? 0);
         $withdrawal_balance = (float)($_POST['withdrawal_balance'] ?? 0);
@@ -52,7 +44,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_user'])) {
             $params = [
                 ':email'              => $email,
                 ':phone'              => $phone,
-                ':country'            => $country ?: null,   // allow empty → NULL
+                ':country'            => $country ? strtoupper($country) : null, // normalize to uppercase
                 ':vip_level'          => $vip_level,
                 ':balance'            => $balance,
                 ':withdrawal_balance' => $withdrawal_balance,
@@ -169,7 +161,7 @@ try {
 
   <?php endif; ?>
 
-  <!-- Edit Modal -->
+  <!-- Edit Modal – now with country dropdown -->
   <div id="editModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.7); align-items:center; justify-content:center; z-index:1000;">
     <div style="background:var(--card); border:1px solid var(--border); border-radius:12px; width:90%; max-width:520px; padding:2.2rem; position:relative; max-height:85vh; overflow-y:auto;">
       <button onclick="closeEditModal()" style="position:absolute; top:1rem; right:1.2rem; background:none; border:none; color:var(--text-muted); font-size:1.8rem; cursor:pointer;">×</button>
@@ -193,10 +185,9 @@ try {
         <div style="margin-bottom:1.4rem;">
           <label style="display:block; margin-bottom:0.5rem;">Country</label>
           <select id="edit_country" name="country" style="width:100%; padding:0.8rem; border:1px solid var(--border); border-radius:6px; background:#0d1117; color:var(--text); font-size:1rem;">
-            <option value="">— Not selected —</option>
             <?php foreach ($countries as $code => $name): ?>
               <option value="<?= htmlspecialchars($code) ?>">
-                <?= htmlspecialchars($name) ?> (<?= htmlspecialchars($code) ?>)
+                <?= htmlspecialchars($name) ?>
               </option>
             <?php endforeach; ?>
           </select>
@@ -236,9 +227,13 @@ function openEditModal(id, email, phone, country, vip_level, balance, withdrawal
   document.getElementById('edit_email').value               = email;
   document.getElementById('edit_phone').value               = phone;
   
-  // Set country dropdown
+  // Set country dropdown value
   const countrySelect = document.getElementById('edit_country');
-  countrySelect.value = country || '';  // matches the value attribute
+  if (country) {
+    countrySelect.value = country.toUpperCase(); // ensure uppercase match
+  } else {
+    countrySelect.value = ''; // default to "— Select Country —"
+  }
 
   document.getElementById('edit_vip_level').value           = vip_level;
   document.getElementById('edit_balance').value             = balance;
