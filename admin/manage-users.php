@@ -2,6 +2,15 @@
 // admin/manage-users.php
 require_once __DIR__ . '/inc/header.php';
 
+// Load countries from ../inc/countries.php
+$countries_file = __DIR__ . '/../inc/countries.php';
+$countries = file_exists($countries_file) ? include $countries_file : [];
+
+// Make sure it's an array
+if (!is_array($countries)) {
+    $countries = [];
+}
+
 // Handle form submission (update user)
 $message = '';
 $error   = '';
@@ -13,7 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_user'])) {
     } else {
         $email             = trim($_POST['email'] ?? '');
         $phone             = trim($_POST['phone'] ?? '');
-        $country           = trim($_POST['country'] ?? '');           // ← new
+        $country           = trim($_POST['country'] ?? '');           // ← from dropdown
         $vip_level         = (int)($_POST['vip_level'] ?? 0);
         $balance           = (float)($_POST['balance'] ?? 0);
         $withdrawal_balance = (float)($_POST['withdrawal_balance'] ?? 0);
@@ -31,7 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_user'])) {
                 SET 
                     email              = :email,
                     phone              = :phone,
-                    country            = :country,          /* ← new */
+                    country            = :country,
                     vip_level          = :vip_level,
                     balance            = :balance,
                     withdrawal_balance = :withdrawal_balance
@@ -43,7 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_user'])) {
             $params = [
                 ':email'              => $email,
                 ':phone'              => $phone,
-                ':country'            => $country,          // ← new
+                ':country'            => $country ?: null,   // allow empty → NULL
                 ':vip_level'          => $vip_level,
                 ':balance'            => $balance,
                 ':withdrawal_balance' => $withdrawal_balance,
@@ -62,11 +71,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_user'])) {
     }
 }
 
-// Fetch all users (including country now)
+// Fetch all users (including country)
 try {
     $stmt = $pdo->query("
         SELECT 
-            id, email, phone, country,           /* ← new */
+            id, email, phone, country,
             referred_by, vip_level, 
             balance, withdrawal_balance, created_at
         FROM users 
@@ -112,7 +121,7 @@ try {
           <th style="padding:1.2rem 1rem; font-weight:600; border-top-left-radius:8px;">ID</th>
           <th style="padding:1.2rem 1rem; font-weight:600;">Email</th>
           <th style="padding:1.2rem 1rem; font-weight:600;">Phone</th>
-          <th style="padding:1.2rem 1rem; font-weight:600;">Country</th> <!-- ← new -->
+          <th style="padding:1.2rem 1rem; font-weight:600;">Country</th>
           <th style="padding:1.2rem 1rem; font-weight:600;">VIP Level</th>
           <th style="padding:1.2rem 1rem; font-weight:600;">Balance</th>
           <th style="padding:1.2rem 1rem; font-weight:600;">Withdrawal Bal.</th>
@@ -129,7 +138,7 @@ try {
           <td style="padding:1.3rem 1rem;"><?= htmlspecialchars($user['phone'] ?? '-') ?></td>
           <td style="padding:1.3rem 1rem; text-align:center; font-weight:500;">
             <?= htmlspecialchars($user['country'] ?: '—') ?>
-          </td> <!-- ← new -->
+          </td>
           <td style="padding:1.3rem 1rem; text-align:center;"><?= htmlspecialchars($user['vip_level'] ?? '0') ?></td>
           <td style="padding:1.3rem 1rem; text-align:right;">$<?= number_format($user['balance'] ?? 0, 2) ?></td>
           <td style="padding:1.3rem 1rem; text-align:right;">$<?= number_format($user['withdrawal_balance'] ?? 0, 2) ?></td>
@@ -143,7 +152,7 @@ try {
                 <?= $user['id'] ?>, 
                 '<?= addslashes($user['email'] ?? '') ?>', 
                 '<?= addslashes($user['phone'] ?? '') ?>', 
-                '<?= addslashes($user['country'] ?? '') ?>',          /* ← new */
+                '<?= addslashes($user['country'] ?? '') ?>',
                 <?= $user['vip_level'] ?? 0 ?>, 
                 <?= $user['balance'] ?? 0 ?>, 
                 <?= $user['withdrawal_balance'] ?? 0 ?>
@@ -160,7 +169,7 @@ try {
 
   <?php endif; ?>
 
-  <!-- Edit Modal – now includes country -->
+  <!-- Edit Modal -->
   <div id="editModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.7); align-items:center; justify-content:center; z-index:1000;">
     <div style="background:var(--card); border:1px solid var(--border); border-radius:12px; width:90%; max-width:520px; padding:2.2rem; position:relative; max-height:85vh; overflow-y:auto;">
       <button onclick="closeEditModal()" style="position:absolute; top:1rem; right:1.2rem; background:none; border:none; color:var(--text-muted); font-size:1.8rem; cursor:pointer;">×</button>
@@ -182,8 +191,15 @@ try {
         </div>
 
         <div style="margin-bottom:1.4rem;">
-          <label style="display:block; margin-bottom:0.5rem;">Country (2-letter code, e.g. NG, US)</label>
-          <input type="text" id="edit_country" name="country" maxlength="2" placeholder="NG" style="width:100%; padding:0.8rem; border:1px solid var(--border); border-radius:6px; background:#0d1117; color:var(--text); font-size:1rem; text-transform:uppercase;">
+          <label style="display:block; margin-bottom:0.5rem;">Country</label>
+          <select id="edit_country" name="country" style="width:100%; padding:0.8rem; border:1px solid var(--border); border-radius:6px; background:#0d1117; color:var(--text); font-size:1rem;">
+            <option value="">— Not selected —</option>
+            <?php foreach ($countries as $code => $name): ?>
+              <option value="<?= htmlspecialchars($code) ?>">
+                <?= htmlspecialchars($name) ?> (<?= htmlspecialchars($code) ?>)
+              </option>
+            <?php endforeach; ?>
+          </select>
         </div>
 
         <div style="margin-bottom:1.4rem;">
@@ -219,7 +235,11 @@ function openEditModal(id, email, phone, country, vip_level, balance, withdrawal
   document.getElementById('edit_user_id').value             = id;
   document.getElementById('edit_email').value               = email;
   document.getElementById('edit_phone').value               = phone;
-  document.getElementById('edit_country').value             = country || '';    // ← new
+  
+  // Set country dropdown
+  const countrySelect = document.getElementById('edit_country');
+  countrySelect.value = country || '';  // matches the value attribute
+
   document.getElementById('edit_vip_level').value           = vip_level;
   document.getElementById('edit_balance').value             = balance;
   document.getElementById('edit_withdrawal_balance').value  = withdrawal_balance;
