@@ -13,11 +13,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_user'])) {
     } else {
         $email             = trim($_POST['email'] ?? '');
         $phone             = trim($_POST['phone'] ?? '');
+        $country           = trim($_POST['country'] ?? '');           // ← new
         $vip_level         = (int)($_POST['vip_level'] ?? 0);
         $balance           = (float)($_POST['balance'] ?? 0);
         $withdrawal_balance = (float)($_POST['withdrawal_balance'] ?? 0);
 
-        // Password is optional — only update if provided
+        // Password is optional
         $password_update = '';
         if (!empty($_POST['password'])) {
             $new_pass = password_hash($_POST['password'], PASSWORD_BCRYPT, ['cost' => 12]);
@@ -30,6 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_user'])) {
                 SET 
                     email              = :email,
                     phone              = :phone,
+                    country            = :country,          /* ← new */
                     vip_level          = :vip_level,
                     balance            = :balance,
                     withdrawal_balance = :withdrawal_balance
@@ -41,6 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_user'])) {
             $params = [
                 ':email'              => $email,
                 ':phone'              => $phone,
+                ':country'            => $country,          // ← new
                 ':vip_level'          => $vip_level,
                 ':balance'            => $balance,
                 ':withdrawal_balance' => $withdrawal_balance,
@@ -52,7 +55,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_user'])) {
             }
 
             $stmt->execute($params);
-
             $message = "User #$user_id updated successfully.";
         } catch (PDOException $e) {
             $error = "Update failed: " . $e->getMessage();
@@ -60,11 +62,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_user'])) {
     }
 }
 
-// Fetch all users (without invite_code and referral_code)
+// Fetch all users (including country now)
 try {
     $stmt = $pdo->query("
         SELECT 
-            id, email, phone, password, 
+            id, email, phone, country,           /* ← new */
             referred_by, vip_level, 
             balance, withdrawal_balance, created_at
         FROM users 
@@ -81,13 +83,13 @@ try {
   <h1 style="text-align:center; margin: 2.5rem 0 2rem;">Manage Users</h1>
 
   <?php if ($message): ?>
-    <div style="background:#238636; color:white; padding:1.2rem; border-radius:8px; margin-bottom:2rem; text-align:center; max-width:800px; margin-left:auto; margin-right:auto;">
+    <div style="background:#238636; color:white; padding:1.2rem; border-radius:8px; margin-bottom:2rem; text-align:center; max-width:900px; margin-left:auto; margin-right:auto;">
       <?= htmlspecialchars($message) ?>
     </div>
   <?php endif; ?>
 
   <?php if ($error): ?>
-    <div style="background:#f85149; color:white; padding:1.2rem; border-radius:8px; margin-bottom:2rem; text-align:center; max-width:800px; margin-left:auto; margin-right:auto;">
+    <div style="background:#f85149; color:white; padding:1.2rem; border-radius:8px; margin-bottom:2rem; text-align:center; max-width:900px; margin-left:auto; margin-right:auto;">
       <?= htmlspecialchars($error) ?>
     </div>
   <?php endif; ?>
@@ -99,7 +101,7 @@ try {
   <div style="overflow-x:auto; margin: 0 auto; max-width: 100%;">
     <table style="
       width:100%; 
-      max-width: 1100px; 
+      max-width: 1200px; 
       margin: 0 auto 3rem; 
       border-collapse: separate; 
       border-spacing: 0 12px; 
@@ -110,6 +112,7 @@ try {
           <th style="padding:1.2rem 1rem; font-weight:600; border-top-left-radius:8px;">ID</th>
           <th style="padding:1.2rem 1rem; font-weight:600;">Email</th>
           <th style="padding:1.2rem 1rem; font-weight:600;">Phone</th>
+          <th style="padding:1.2rem 1rem; font-weight:600;">Country</th> <!-- ← new -->
           <th style="padding:1.2rem 1rem; font-weight:600;">VIP Level</th>
           <th style="padding:1.2rem 1rem; font-weight:600;">Balance</th>
           <th style="padding:1.2rem 1rem; font-weight:600;">Withdrawal Bal.</th>
@@ -124,6 +127,9 @@ try {
           <td style="padding:1.3rem 1rem; border-radius:0 0 0 8px;"><?= htmlspecialchars($user['id']) ?></td>
           <td style="padding:1.3rem 1rem;"><?= htmlspecialchars($user['email'] ?? '-') ?></td>
           <td style="padding:1.3rem 1rem;"><?= htmlspecialchars($user['phone'] ?? '-') ?></td>
+          <td style="padding:1.3rem 1rem; text-align:center; font-weight:500;">
+            <?= htmlspecialchars($user['country'] ?: '—') ?>
+          </td> <!-- ← new -->
           <td style="padding:1.3rem 1rem; text-align:center;"><?= htmlspecialchars($user['vip_level'] ?? '0') ?></td>
           <td style="padding:1.3rem 1rem; text-align:right;">$<?= number_format($user['balance'] ?? 0, 2) ?></td>
           <td style="padding:1.3rem 1rem; text-align:right;">$<?= number_format($user['withdrawal_balance'] ?? 0, 2) ?></td>
@@ -137,6 +143,7 @@ try {
                 <?= $user['id'] ?>, 
                 '<?= addslashes($user['email'] ?? '') ?>', 
                 '<?= addslashes($user['phone'] ?? '') ?>', 
+                '<?= addslashes($user['country'] ?? '') ?>',          /* ← new */
                 <?= $user['vip_level'] ?? 0 ?>, 
                 <?= $user['balance'] ?? 0 ?>, 
                 <?= $user['withdrawal_balance'] ?? 0 ?>
@@ -153,9 +160,9 @@ try {
 
   <?php endif; ?>
 
-  <!-- Edit Modal (unchanged) -->
+  <!-- Edit Modal – now includes country -->
   <div id="editModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.7); align-items:center; justify-content:center; z-index:1000;">
-    <div style="background:var(--card); border:1px solid var(--border); border-radius:12px; width:90%; max-width:520px; padding:2.2rem; position:relative;">
+    <div style="background:var(--card); border:1px solid var(--border); border-radius:12px; width:90%; max-width:520px; padding:2.2rem; position:relative; max-height:85vh; overflow-y:auto;">
       <button onclick="closeEditModal()" style="position:absolute; top:1rem; right:1.2rem; background:none; border:none; color:var(--text-muted); font-size:1.8rem; cursor:pointer;">×</button>
       
       <h2 style="margin-bottom:1.8rem; text-align:center;">Edit User</h2>
@@ -172,6 +179,11 @@ try {
         <div style="margin-bottom:1.4rem;">
           <label style="display:block; margin-bottom:0.5rem;">Phone</label>
           <input type="text" id="edit_phone" name="phone" style="width:100%; padding:0.8rem; border:1px solid var(--border); border-radius:6px; background:#0d1117; color:var(--text); font-size:1rem;">
+        </div>
+
+        <div style="margin-bottom:1.4rem;">
+          <label style="display:block; margin-bottom:0.5rem;">Country (2-letter code, e.g. NG, US)</label>
+          <input type="text" id="edit_country" name="country" maxlength="2" placeholder="NG" style="width:100%; padding:0.8rem; border:1px solid var(--border); border-radius:6px; background:#0d1117; color:var(--text); font-size:1rem; text-transform:uppercase;">
         </div>
 
         <div style="margin-bottom:1.4rem;">
@@ -203,10 +215,11 @@ try {
 </main>
 
 <script>
-function openEditModal(id, email, phone, vip_level, balance, withdrawal_balance) {
+function openEditModal(id, email, phone, country, vip_level, balance, withdrawal_balance) {
   document.getElementById('edit_user_id').value             = id;
   document.getElementById('edit_email').value               = email;
   document.getElementById('edit_phone').value               = phone;
+  document.getElementById('edit_country').value             = country || '';    // ← new
   document.getElementById('edit_vip_level').value           = vip_level;
   document.getElementById('edit_balance').value             = balance;
   document.getElementById('edit_withdrawal_balance').value  = withdrawal_balance;
