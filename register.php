@@ -46,6 +46,33 @@ $msg="Passwords do not match";
 
 }else{
 
+/* CHECK IF INVITE CODE EXISTS */
+
+$ref=$pdo->prepare("SELECT email,phone FROM users WHERE referral_code=?");
+$ref->execute([$invite]);
+$referrer=$ref->fetch(PDO::FETCH_ASSOC);
+
+if(!$referrer){
+
+$msg="Invalid invitation code";
+
+}else{
+
+/* GET REFERRER EMAIL OR PHONE */
+
+$referred_by = !empty($referrer['email']) ? $referrer['email'] : $referrer['phone'];
+
+/* GENERATE UNIQUE 6 DIGIT REFERRAL CODE */
+
+do{
+
+$new_referral = rand(100000,999999);
+
+$check_code=$pdo->prepare("SELECT id FROM users WHERE referral_code=?");
+$check_code->execute([$new_referral]);
+
+}while($check_code->rowCount()>0);
+
 $hash=password_hash($password,PASSWORD_DEFAULT);
 
 if($type=="email"){
@@ -56,18 +83,30 @@ $check=$pdo->prepare("SELECT id FROM users WHERE email=?");
 $check->execute([$email]);
 
 if($check->rowCount()>0){
+
 $msg="Email already exists";
+
 }else{
 
 $stmt=$pdo->prepare(
-"INSERT INTO users(email,password,invite_code,country,vip_level,balance)
-VALUES(?,?,?,?,?,?)"
+"INSERT INTO users(email,password,invite_code,referral_code,referred_by,country,vip_level,balance)
+VALUES(?,?,?,?,?,?,?,?)"
 );
 
-$stmt->execute([$email,$hash,$invite,$country,0,0]);
+$stmt->execute([
+$email,
+$hash,
+$invite,
+$new_referral,
+$referred_by,
+$country,
+0,
+0
+]);
 
 header("Location: login.php");
 exit;
+
 }
 
 }else{
@@ -78,21 +117,38 @@ $check=$pdo->prepare("SELECT id FROM users WHERE phone=?");
 $check->execute([$phone]);
 
 if($check->rowCount()>0){
+
 $msg="Phone already exists";
+
 }else{
 
 $stmt=$pdo->prepare(
-"INSERT INTO users(phone,password,invite_code,country,vip_level,balance)
-VALUES(?,?,?,?,?,?)"
+"INSERT INTO users(phone,password,invite_code,referral_code,referred_by,country,vip_level,balance)
+VALUES(?,?,?,?,?,?,?,?)"
 );
 
-$stmt->execute([$phone,$hash,$invite,$country,0,0]);
+$stmt->execute([
+$phone,
+$hash,
+$invite,
+$new_referral,
+$referred_by,
+$country,
+0,
+0
+]);
 
 header("Location: login.php");
 exit;
+
 }
+
 }
+
 }
+
+}
+
 }
 ?>
 
