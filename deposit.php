@@ -3,60 +3,60 @@ session_start();
 require_once "config/database.php";
 
 if(!isset($_SESSION['user_id'])){
-    header("Location: login.php");
-    exit;
+header("Location: login.php");
+exit;
 }
 
-$user_id = $_SESSION['user_id'];
+$user_id=$_SESSION['user_id'];
 
-/* Ensure id exists */
 if(!isset($_GET['id'])){
-    echo "Invalid payment method";
-    exit;
+echo "Invalid payment method";
+exit;
 }
 
-$method_id = intval($_GET['id']);
+$method_id=intval($_GET['id']);
 
-/* Fetch payment method */
-$stmt = $pdo->prepare("SELECT * FROM payment_methods WHERE id = ?");
+$stmt=$pdo->prepare("SELECT * FROM payment_methods WHERE id=?");
 $stmt->execute([$method_id]);
-$method = $stmt->fetch(PDO::FETCH_ASSOC);
+$method=$stmt->fetch(PDO::FETCH_ASSOC);
 
-/* Check if method exists */
 if(!$method){
-    echo "Payment method not found";
-    exit;
+echo "Payment method not found";
+exit;
 }
 
 $msg="";
 
-/* Handle proof upload */
 if($_SERVER['REQUEST_METHOD']=="POST"){
 
-    if(isset($_FILES['proof']) && $_FILES['proof']['error']==0){
+$amount=$_POST['amount'];
 
-        $upload_dir="assets/images/proof/";
+if(isset($_FILES['proof']) && $_FILES['proof']['error']==0){
 
-        if(!is_dir($upload_dir)){
-            mkdir($upload_dir,0777,true);
-        }
+$upload_dir="assets/images/proof/";
 
-        $file_name=time()."_".basename($_FILES["proof"]["name"]);
-        $target_file=$upload_dir.$file_name;
+if(!is_dir($upload_dir)){
+mkdir($upload_dir,0777,true);
+}
 
-        move_uploaded_file($_FILES["proof"]["tmp_name"],$target_file);
+$file_name=time()."_".basename($_FILES["proof"]["name"]);
+$target_file=$upload_dir.$file_name;
 
-        $stmt=$pdo->prepare(
-        "INSERT INTO deposits(user_id,method_id,proof)
-        VALUES(?,?,?)"
-        );
+move_uploaded_file($_FILES["proof"]["tmp_name"],$target_file);
 
-        $stmt->execute([$user_id,$method_id,$target_file]);
+$stmt=$pdo->prepare(
+"INSERT INTO deposits(user_id,method_id,amount,proof)
+VALUES(?,?,?,?)"
+);
 
-        $_SESSION['recharge_msg'] = "Recharge submitted successfully";
-        header("Location: index.php");
-        exit;
-    }
+$stmt->execute([$user_id,$method_id,$amount,$target_file]);
+
+$_SESSION['recharge_msg']="Recharge submitted successfully";
+header("Location: index.php");
+exit;
+
+}
+
 }
 ?>
 
@@ -76,7 +76,6 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
 <span>BINANCE DIGITAL</span>
 </div>
 
-<!-- Payment Method -->
 <div class="deposit-method">
 
 <?php if(!empty($method['image'])): ?>
@@ -87,22 +86,19 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
 
 </div>
 
-<!-- QR CODE -->
+
+<?php if($method['crypto']==1): ?>
+
+<!-- CRYPTO SECTION -->
+
 <div class="deposit-qr">
 
 <?php if(!empty($method['qr_image'])): ?>
-
-<img src="<?php echo htmlspecialchars($method['qr_image']); ?>" alt="QR Code">
-
-<?php else: ?>
-
-<p style="color:white;text-align:center;">QR Code not available</p>
-
+<img src="<?php echo htmlspecialchars($method['qr_image']); ?>">
 <?php endif; ?>
 
 </div>
 
-<!-- ADDRESS -->
 <div class="deposit-address-title">
 Address
 </div>
@@ -118,12 +114,53 @@ readonly>
 
 </div>
 
-<!-- Upload Proof -->
+<?php else: ?>
+
+<!-- BANK / MOMO SECTION -->
+
+<div class="deposit-info">
+
+<?php if($method['type']=="bank"): ?>
+
+<p><strong>Bank:</strong> <?php echo htmlspecialchars($method['network']); ?></p>
+
+<?php else: ?>
+
+<p><strong>Network:</strong> <?php echo htmlspecialchars($method['network']); ?></p>
+
+<?php endif; ?>
+
+<p><strong>
+<?php echo ($method['type']=="bank") ? "Account Name" : "MOMO Name"; ?>
+:</strong>
+<?php echo htmlspecialchars($method['account_name']); ?>
+</p>
+
+<p><strong>
+<?php echo ($method['type']=="bank") ? "Account Number" : "MOMO Number"; ?>
+:</strong>
+<?php echo htmlspecialchars($method['account_number']); ?>
+</p>
+
+</div>
+
+<?php endif; ?>
+
+
 <form method="POST" enctype="multipart/form-data">
 
 <div class="upload-proof">
+
+<label>Enter Amount</label>
+<input type="number" name="amount" step="0.01" required>
+
+</div>
+
+<div class="upload-proof">
+
 <label>Upload payment proof</label>
 <input type="file" name="proof" required>
+
 </div>
 
 <button class="deposit-btn">
@@ -132,17 +169,22 @@ Recharge completed
 
 </form>
 
-<?php if($msg): ?>
-
-<div class="deposit-msg">
-<?php echo $msg; ?>
-</div>
-
-<?php endif; ?>
 
 <div class="deposit-note">
 
-Note. Please use the corresponding cryptocurrency for deposits. Deposits below 2 USDT and USDC will not be credited, below 10 TRX, below 0.003 BNB, below 0.001 ETH, and below 1 POLYGON.
+<?php if($method['crypto']==1): ?>
+
+Note. Please use the correct cryptocurrency network when depositing.
+
+<?php elseif($method['type']=="bank"): ?>
+
+Note. Transfer the exact amount to the bank account above and upload the receipt.
+
+<?php else: ?>
+
+Note. Send the payment using MOMO to the number above and upload proof.
+
+<?php endif; ?>
 
 </div>
 
