@@ -4,8 +4,8 @@ require_once __DIR__ . '/inc/header.php';
 $message='';
 $error='';
 
-$qr_upload_dir=__DIR__.'/../../assets/images/qr/';
-$logo_upload_dir=__DIR__.'/../../assets/images/';
+$qr_upload_dir=__DIR__.'../assets/images/qr/';
+$logo_upload_dir=__DIR__.'../assets/images/';
 
 $qr_prefix='assets/images/qr/';
 $logo_prefix='assets/images/';
