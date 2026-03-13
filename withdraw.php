@@ -27,7 +27,6 @@ ORDER BY id ASC
 ");
 
 $stmt->execute([$user_country]);
-
 $methods=$stmt->fetchAll(PDO::FETCH_ASSOC);
 
 $msg="";
@@ -44,6 +43,15 @@ $network_bank=$_POST['network_bank'] ?? null;
 $account_name=$_POST['account_name'] ?? null;
 $account_number=$_POST['account_number'] ?? null;
 
+/* FETCH METHOD CONFIG */
+
+$stmt=$pdo->prepare("SELECT withdrawal_fee,min_withdraw FROM payment_methods WHERE name=?");
+$stmt->execute([$method]);
+$methodData=$stmt->fetch(PDO::FETCH_ASSOC);
+
+$feeRate=$methodData['withdrawal_fee'] ?? 0;
+$minWithdraw=$methodData['min_withdraw'] ?? 0;
+
 /* PASSWORD CHECK */
 
 if(!password_verify($password,$user['password'])){
@@ -58,9 +66,13 @@ $msg="Insufficient balance";
 
 $msg="Invalid withdrawal amount";
 
+}elseif($amount < $minWithdraw){
+
+$msg="Minimum withdrawal for this method is ".$minWithdraw." USDT";
+
 }else{
 
-$fee=$amount*0.05;
+$fee=$amount * $feeRate;
 $received=$amount-$fee;
 
 /* SAVE WITHDRAWAL */
@@ -131,6 +143,8 @@ Total balance
 name="method"
 value="<?php echo htmlspecialchars($m['name']); ?>"
 data-type="<?php echo $m['crypto'] ? 'crypto' : $m['type']; ?>"
+data-fee="<?php echo $m['withdrawal_fee']; ?>"
+data-min="<?php echo $m['min_withdraw']; ?>"
 required>
 
 <img src="<?php echo htmlspecialchars($m['image']); ?>" class="method-icon">
@@ -275,36 +289,64 @@ window.location.href="index.php";
 }
 
 
-/* AUTO CALCULATE FEES */
+/* WITHDRAWAL METHOD DATA */
 
 const amountInput=document.querySelector("input[name='amount']");
-
-amountInput.addEventListener("input",function(){
-
-let amount=parseFloat(this.value)||0;
-
-let fee=amount*0.05;
-let received=amount-fee;
-
-document.getElementById("fee").innerText=fee.toFixed(2)+" USDT";
-document.getElementById("received").innerText=received.toFixed(2)+" USDT";
-
-});
-
-
-/* TOGGLE WITHDRAWAL FIELDS */
-
 const radios=document.querySelectorAll("input[name='method']");
 
-const cryptoFields=document.getElementById("cryptoFields");
-const bankFields=document.getElementById("bankFields");
-const momoFields=document.getElementById("momoFields");
+let feeRate=0;
+let minWithdraw=0;
+
+/* METHOD CHANGE */
 
 radios.forEach(radio=>{
 
 radio.addEventListener("change",function(){
 
-let type=this.dataset.type;
+feeRate=parseFloat(this.dataset.fee) || 0;
+minWithdraw=parseFloat(this.dataset.min) || 0;
+
+toggleFields(this.dataset.type);
+calculateWithdrawal();
+
+});
+
+});
+
+
+/* CALCULATE FEES */
+
+amountInput.addEventListener("input",calculateWithdrawal);
+
+function calculateWithdrawal(){
+
+let amount=parseFloat(amountInput.value) || 0;
+
+let fee=amount * feeRate;
+let received=amount - fee;
+
+document.getElementById("fee").innerText=fee.toFixed(2)+" USDT";
+
+if(amount>0 && amount < minWithdraw){
+
+document.getElementById("received").innerText="Min withdrawal: "+minWithdraw+" USDT";
+
+}else{
+
+document.getElementById("received").innerText=received.toFixed(2)+" USDT";
+
+}
+
+}
+
+
+/* TOGGLE WITHDRAWAL FIELDS */
+
+const cryptoFields=document.getElementById("cryptoFields");
+const bankFields=document.getElementById("bankFields");
+const momoFields=document.getElementById("momoFields");
+
+function toggleFields(type){
 
 cryptoFields.style.display="none";
 bankFields.style.display="none";
@@ -322,9 +364,7 @@ if(type==="momo"){
 momoFields.style.display="block";
 }
 
-});
-
-});
+}
 
 </script>
 
