@@ -192,6 +192,8 @@ $methods=$stmt->fetchAll(PDO::FETCH_ASSOC);
 </div>
 <?php endif; ?>
 
+<!-- ADD METHOD -->
+
 <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:2rem;margin-bottom:3rem;max-width:900px;margin-left:auto;margin-right:auto;">
 
 <h2 style="margin-bottom:1.8rem;text-align:center;">Add Payment Method</h2>
@@ -270,6 +272,70 @@ Add Payment Method
 </button>
 
 </form>
+
+</div>
+
+<!-- LIST METHODS -->
+
+<h2 style="text-align:center;margin:3rem 0 1.5rem;">Payment Methods</h2>
+
+<div style="overflow-x:auto;">
+
+<table style="width:100%;max-width:1100px;margin:0 auto;border-collapse:separate;border-spacing:0 10px;">
+
+<thead>
+<tr style="background:#1f2937;">
+<th>ID</th>
+<th>Name</th>
+<th>Logo</th>
+<th>QR</th>
+<th>Status</th>
+<th>Actions</th>
+</tr>
+</thead>
+
+<tbody>
+
+<?php foreach($methods as $m): ?>
+
+<tr style="background:var(--card);">
+
+<td style="padding:1rem;text-align:center"><?= $m['id'] ?></td>
+
+<td style="padding:1rem"><?= htmlspecialchars($m['name']) ?></td>
+
+<td style="padding:1rem;text-align:center">
+<?php if($m['image']): ?>
+<img src="../<?= $m['image'] ?>" style="max-width:60px;">
+<?php endif; ?>
+</td>
+
+<td style="padding:1rem;text-align:center">
+<?php if($m['qr_image']): ?>
+<img src="../<?= $m['qr_image'] ?>" style="max-width:60px;">
+<?php endif; ?>
+</td>
+
+<td style="padding:1rem;text-align:center">
+<?= $m['status'] ? 'Active':'Inactive' ?>
+</td>
+
+<td style="padding:1rem;text-align:center">
+
+<form method="POST" style="display:inline;">
+<input type="hidden" name="action" value="delete">
+<input type="hidden" name="id" value="<?= $m['id'] ?>">
+<button class="btn red">Delete</button>
+</form>
+
+</td>
+
+</tr>
+
+<?php endforeach; ?>
+
+</tbody>
+</table>
 
 </div>
 
