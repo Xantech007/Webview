@@ -34,8 +34,12 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
 $type=$_POST['type'] ?? '';
 $password=$_POST['password'] ?? '';
 $confirm=$_POST['confirm'] ?? '';
-$invite=trim($_POST['invite'] ?? '');
 $country=$_POST['country'] ?? '';
+
+/* Prevent referral tampering */
+$invite = !empty($_POST['invite_locked'])
+? $_POST['invite_locked']
+: trim($_POST['invite'] ?? '');
 
 if($password!=$confirm){
 
@@ -59,18 +63,20 @@ $msg="Invalid invitation code";
 
 }else{
 
-$referred_by = !empty($referrer['email']) ? $referrer['email'] : $referrer['phone'];
+$referred_by = !empty($referrer['email'])
+? $referrer['email']
+: $referrer['phone'];
 
 }
 
 }
 
-/* STOP IF ERROR */
+/* STOP REGISTRATION IF ERROR */
 if(!empty($msg)){
 return;
 }
 
-/* GENERATE UNIQUE 6 DIGIT REFERRAL CODE */
+/* GENERATE UNIQUE REFERRAL CODE */
 
 do{
 
@@ -349,7 +355,8 @@ echo "<option value=\"$country\" $selected>$country</option>";
 <div class="input">
 <i class="fa fa-thumbs-up"></i>
 <input type="text" name="invite" placeholder="Invitation Code"
-value="<?= $invite_code ?>">
+value="<?= $invite_code ?>" <?= $invite_code ? 'readonly' : '' ?>>
+<input type="hidden" name="invite_locked" value="<?= $invite_code ?>">
 </div>
 
 <button type="submit" class="btn signup">Create Account</button>
@@ -404,7 +411,8 @@ echo "<option value=\"$country\" $selected>$country</option>";
 <div class="input">
 <i class="fa fa-thumbs-up"></i>
 <input type="text" name="invite" placeholder="Invitation Code"
-value="<?= $invite_code ?>">
+value="<?= $invite_code ?>" <?= $invite_code ? 'readonly' : '' ?>>
+<input type="hidden" name="invite_locked" value="<?= $invite_code ?>">
 </div>
 
 <button type="submit" class="btn signup">Create Account</button>
