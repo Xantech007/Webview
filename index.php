@@ -201,11 +201,16 @@ Task Reset Countdown
 
 <?php while($vip = $vipQuery->fetch(PDO::FETCH_ASSOC)): ?>
 
-<a href="vip.php?id=<?php echo $vip['id']; ?>" class="task-card">
+<a href="vip.php?id=<?php echo $vip['id']; ?>" 
+class="task-card <?php echo ($user['vip_level'] < $vip['id']) ? 'locked' : 'unlocked'; ?>">
 
 <div class="task-left">
 
 <img src="assets/images/task.png" class="vip-icon">
+
+<div class="vip-badge-card">
+<?php echo htmlspecialchars($vip['name']); ?>
+</div>
 
 <?php if(intval($user['vip_level']) < intval($vip['id'])): ?>
 <i class="fa-solid fa-lock lock-overlay"></i>
