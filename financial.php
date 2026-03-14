@@ -41,17 +41,17 @@ $withdrawals=$stmt->fetchAll(PDO::FETCH_ASSOC);
 <div class="financial-tabs">
 
 <div class="tab active" onclick="switchTab('basic')">
-Basic account
+Deposits
 </div>
 
 <div class="tab" onclick="switchTab('withdraw')">
-Withdrawal account
+Withdrawals
 </div>
 
 </div>
 
 
-<!-- BASIC ACCOUNT -->
+<!-- Deposits -->
 
 <div class="financial-content active" id="basic">
 
@@ -89,7 +89,7 @@ Deposit
 
 
 
-<!-- WITHDRAW ACCOUNT -->
+<!-- WITHDRAWALS -->
 
 <div class="financial-content" id="withdraw">
 
