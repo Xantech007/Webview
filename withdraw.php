@@ -46,10 +46,10 @@ $account_number=$_POST['account_number'] ?? null;
 
 /* FETCH METHOD SETTINGS */
 
-$stmt=$pdo->prepare("SELECT conversion_rate,withdrawal_fee,min_withdraw FROM payment_methods WHERE name=?");
+$stmt=$pdo->prepare("SELECT conversion_rate,withdrawal_fee,min_withdraw,currency FROM payment_methods WHERE name=?");
 $stmt->execute([$method]);
 $methodData=$stmt->fetch(PDO::FETCH_ASSOC);
-
+$currency=$methodData['currency'];
 $rate=$methodData['conversion_rate'];
 $fee=$methodData['withdrawal_fee'];   // fixed fee
 $minWithdraw=$methodData['min_withdraw'];
@@ -84,13 +84,14 @@ $received=$amount_local - $fee;
 
 $stmt=$pdo->prepare("
 INSERT INTO withdrawals
-(user_id,method,amount,address,network_bank,account_name,account_number,fee,received)
-VALUES(?,?,?,?,?,?,?,?,?)
+(user_id,method,currency,amount,address,network_bank,account_name,account_number,fee,received)
+VALUES(?,?,?,?,?,?,?,?,?,?)
 ");
 
 $stmt->execute([
 $user_id,
 $method,
+$currency,
 $amount_usd,
 $address,
 $network_bank,
