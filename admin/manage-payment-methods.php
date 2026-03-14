@@ -336,9 +336,13 @@ Add Payment Method
 
 <tr style="background:var(--card);">
 
-<td style="padding:1rem;text-align:center"><?= $m['id'] ?></td>
+<td style="padding:1rem;text-align:center">
+<?= $m['id'] ?>
+</td>
 
-<td style="padding:1rem"><?= htmlspecialchars($m['name']) ?></td>
+<td style="padding:1rem">
+<?= htmlspecialchars($m['name']) ?>
+</td>
 
 <td style="padding:1rem;text-align:center">
 <?php if($m['image']): ?>
@@ -353,7 +357,23 @@ Add Payment Method
 </td>
 
 <td style="padding:1rem;text-align:center">
-<?= $m['status'] ? 'Active':'Inactive' ?>
+<?= htmlspecialchars($m['currency']) ?>
+</td>
+
+<td style="padding:1rem;text-align:center">
+<?= number_format($m['conversion_rate'],8) ?>
+</td>
+
+<td style="padding:1rem;text-align:center">
+<?= number_format($m['min_withdraw'],2) ?>
+</td>
+
+<td style="padding:1rem;text-align:center">
+<?= htmlspecialchars($m['active_country'] ?: 'All') ?>
+</td>
+
+<td style="padding:1rem;text-align:center">
+<?= $m['status'] ? 'Active' : 'Inactive' ?>
 </td>
 
 <td style="padding:1rem;text-align:center">
@@ -371,16 +391,7 @@ Edit
 
 </td>
 
-<td><?= htmlspecialchars($m['currency']) ?></td>
-
-<td><?= number_format($m['conversion_rate'],8) ?></td>
-
-<td><?= number_format($m['min_withdraw'],2) ?></td>
-
-<td><?= htmlspecialchars($m['active_country'] ?: 'All') ?></td>
-  
 </tr>
-
 <?php endforeach; ?>
 
 </tbody>
