@@ -17,11 +17,22 @@ $email = $user['email'];
 $balance = $user['balance'];
 $vip = "VIP".$user['vip_level'];
 
-$stmt = $pdo->prepare("SELECT SUM(amount) as total FROM deposits WHERE user_id=? AND status='approved'");
+/* LAST RECHARGE */
+
+$stmt = $pdo->prepare("
+SELECT paid_amount 
+FROM deposits 
+WHERE user_id=? AND status=1
+ORDER BY id DESC
+LIMIT 1
+");
+
 $stmt->execute([$user_id]);
+
 $recharge = $stmt->fetch(PDO::FETCH_ASSOC);
 
-$recharge_amount = $recharge['total'] ?? 0;
+$recharge_amount = $recharge['paid_amount'] ?? 0;
+
 ?>
 
 <?php include "inc/header.php"; ?>
@@ -53,7 +64,7 @@ $recharge_amount = $recharge['total'] ?? 0;
 
 <div class="balance-item">
 
-<p>Total balance (USDT)</p>
+<p>Total balance (USD)</p>
 
 <h2><?php echo number_format($balance,2); ?></h2>
 
@@ -61,7 +72,7 @@ $recharge_amount = $recharge['total'] ?? 0;
 
 <div class="balance-item">
 
-<p>Recharge amount (USDT)</p>
+<p>Last Recharge amount (USD)</p>
 
 <h2><?php echo number_format($recharge_amount,2); ?></h2>
 
