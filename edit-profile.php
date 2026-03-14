@@ -47,26 +47,15 @@ $old=$_POST['old_password'];
 $new=$_POST['new_password'];
 $confirm=$_POST['confirm_password'];
 
-/* VERIFY OLD PASSWORD */
-
 if(!password_verify($old,$user['password'])){
-
 $msg="Old password is incorrect";
-
 }
-
 elseif(strlen($new) < 6){
-
 $msg="Password must be at least 6 characters";
-
 }
-
 elseif($new != $confirm){
-
 $msg="New passwords do not match";
-
 }
-
 else{
 
 $newHash=password_hash($new,PASSWORD_DEFAULT);
@@ -101,46 +90,60 @@ $success="Password changed successfully";
 
 <!-- ================= USER DETAILS ================= -->
 
+<label>Email</label>
 <div class="pwd-box">
 <input type="text" value="<?php echo htmlspecialchars($user['email']); ?>" readonly>
 </div>
 
+
+<label>Phone</label>
 <div class="pwd-box">
 <input type="text" value="<?php echo htmlspecialchars($user['phone']); ?>" readonly>
 </div>
 
+
+<label>VIP Level</label>
 <div class="pwd-box">
 <input type="text" value="VIP<?php echo $user['vip_level']; ?>" readonly>
 </div>
 
+
+<label>Account Balance</label>
 <div class="pwd-box">
 <input type="text" value="<?php echo number_format($user['balance'],2); ?> USD" readonly>
 </div>
 
+
+<label>Invitation Code</label>
 <div class="pwd-box">
 <input type="text" value="<?php echo htmlspecialchars($user['invite_code']); ?>" readonly>
 </div>
 
+
+<label>Referral Code</label>
 <div class="pwd-box">
 <input type="text" value="<?php echo htmlspecialchars($user['referral_code']); ?>" readonly>
 </div>
 
+
+<label>Registration Date</label>
 <div class="pwd-box">
 <input type="text" value="<?php echo $user['created_at']; ?>" readonly>
 </div>
 
 
 
-<!-- ================= UPDATE COUNTRY ================= -->
+<!-- ================= COUNTRY UPDATE ================= -->
+
+<label>Country</label>
 
 <form method="POST">
 
 <div class="pwd-box">
 
-<select name="country" required>
+<select name="country" required style="width:100%;background:transparent;border:none;color:white;outline:none;">
 
 <?php
-
 foreach($countries as $c){
 
 $selected = ($c == $user['country']) ? "selected" : "";
@@ -148,7 +151,6 @@ $selected = ($c == $user['country']) ? "selected" : "";
 echo "<option value=\"$c\" $selected>$c</option>";
 
 }
-
 ?>
 
 </select>
@@ -163,7 +165,15 @@ Update Country
 
 
 
+<!-- ================= SPACING BEFORE PASSWORD ================= -->
+
+<div style="height:40px;"></div>
+
+
+
 <!-- ================= CHANGE PASSWORD ================= -->
+
+<h3 style="margin-bottom:15px;">Change Password</h3>
 
 <form method="POST">
 
