@@ -25,8 +25,9 @@ $ref_code = $user['referral_code'];
 $ref_link = "https://".$_SERVER['HTTP_HOST']."/register.php?invite=".$ref_code;
 
 
-/* TEAM STATS */
+/* ================= TEAM STATS ================= */
 
+/* team size */
 $stmt = $pdo->prepare("SELECT COUNT(*) FROM users WHERE referred_by=?");
 $stmt->execute([$ref_code]);
 $team_size = $stmt->fetchColumn();
@@ -44,6 +45,119 @@ JOIN users ON withdrawals.user_id=users.id
 WHERE users.referred_by=? AND withdrawals.status=1");
 $stmt->execute([$ref_code]);
 $team_withdraw = $stmt->fetchColumn() ?? 0;
+
+
+/* ================= LEVEL 1 ================= */
+
+$stmt = $pdo->prepare("SELECT id,referral_code FROM users WHERE referred_by=?");
+$stmt->execute([$ref_code]);
+$level1 = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+$l1_register = count($level1);
+
+$l1_ids = array_column($level1,'id');
+$l1_codes = array_column($level1,'referral_code');
+
+$l1_valid = 0;
+
+if($l1_ids){
+$in = implode(',',array_fill(0,count($l1_ids),'?'));
+
+$stmt = $pdo->prepare("SELECT COUNT(DISTINCT user_id) FROM deposits WHERE status=1 AND user_id IN ($in)");
+$stmt->execute($l1_ids);
+$l1_valid = $stmt->fetchColumn();
+}
+
+
+/* ================= LEVEL 2 ================= */
+
+$l2_register = 0;
+$l2_valid = 0;
+
+if($l1_codes){
+
+$in = implode(',',array_fill(0,count($l1_codes),'?'));
+
+$stmt = $pdo->prepare("SELECT id,referral_code FROM users WHERE referred_by IN ($in)");
+$stmt->execute($l1_codes);
+
+$level2 = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+$l2_register = count($level2);
+
+$l2_ids = array_column($level2,'id');
+$l2_codes = array_column($level2,'referral_code');
+
+if($l2_ids){
+
+$in = implode(',',array_fill(0,count($l2_ids),'?'));
+
+$stmt = $pdo->prepare("SELECT COUNT(DISTINCT user_id) FROM deposits WHERE status=1 AND user_id IN ($in)");
+$stmt->execute($l2_ids);
+$l2_valid = $stmt->fetchColumn();
+
+}
+
+}else{
+$l2_codes=[];
+}
+
+
+/* ================= LEVEL 3 ================= */
+
+$l3_register = 0;
+$l3_valid = 0;
+
+if(!empty($l2_codes)){
+
+$in = implode(',',array_fill(0,count($l2_codes),'?'));
+
+$stmt = $pdo->prepare("SELECT id FROM users WHERE referred_by IN ($in)");
+$stmt->execute($l2_codes);
+
+$level3 = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+$l3_register = count($level3);
+
+$l3_ids = array_column($level3,'id');
+
+if($l3_ids){
+
+$in = implode(',',array_fill(0,count($l3_ids),'?'));
+
+$stmt = $pdo->prepare("SELECT COUNT(DISTINCT user_id) FROM deposits WHERE status=1 AND user_id IN ($in)");
+$stmt->execute($l3_ids);
+$l3_valid = $stmt->fetchColumn();
+
+}
+
+}
+
+
+/* ================= EXTRA STATS ================= */
+
+/* first time recharge */
+
+$stmt = $pdo->prepare("
+SELECT COUNT(DISTINCT users.id)
+FROM users
+JOIN deposits ON users.id = deposits.user_id
+WHERE users.referred_by=? AND deposits.status=1
+");
+$stmt->execute([$ref_code]);
+$first_recharge = $stmt->fetchColumn();
+
+
+/* first withdrawal */
+
+$stmt = $pdo->prepare("
+SELECT COUNT(DISTINCT users.id)
+FROM users
+JOIN withdrawals ON users.id = withdrawals.user_id
+WHERE users.referred_by=? AND withdrawals.status=1
+");
+$stmt->execute([$ref_code]);
+$first_withdraw = $stmt->fetchColumn();
 
 ?>
 
@@ -123,12 +237,12 @@ $team_withdraw = $stmt->fetchColumn() ?? 0;
 
 <div>
 <span>First time recharge</span>
-<strong>0</strong>
+<strong><?php echo $first_recharge; ?></strong>
 </div>
 
 <div>
 <span>First withdrawal</span>
-<strong>0</strong>
+<strong><?php echo $first_withdraw; ?></strong>
 </div>
 
 </div>
@@ -139,37 +253,35 @@ $team_withdraw = $stmt->fetchColumn() ?? 0;
 
 <div class="team-level level1">
 
-    <div class="level-badge">
-        <img src="assets/images/medal.png">
-        <span>LEVEL 1</span>
-    </div>
+<div class="level-badge">
+<img src="assets/images/medal.png">
+<span>LEVEL 1</span>
+</div>
 
-    <div class="level-panel">
+<div class="level-panel">
 
-        <div class="level-stats">
+<div class="level-stats">
 
-            <div>
-                <p>Register/Valid</p>
-                <strong>0/0</strong>
-            </div>
+<div>
+<p>Register/Valid</p>
+<strong><?php echo $l1_register.'/'.$l1_valid; ?></strong>
+</div>
 
-            <div>
-                <p>Total Income</p>
-                <strong>0</strong>
-            </div>
+<div>
+<p>Total Income</p>
+<strong>0</strong>
+</div>
 
-        </div>
+</div>
 
-        <div class="level-commission">
+<div class="level-commission">
+<p>Commission Percentage</p>
+<strong>16%</strong>
+</div>
 
-            <p>Commission Percentage</p>
-            <strong>16%</strong>
+</div>
 
-        </div>
-
-    </div>
-
-    <a href="team/1.php" class="detail-btn">Details</a>
+<a href="team/1.php" class="detail-btn">Details</a>
 
 </div>
 
@@ -179,37 +291,35 @@ $team_withdraw = $stmt->fetchColumn() ?? 0;
 
 <div class="team-level level2">
 
-    <div class="level-badge">
-        <img src="assets/images/medal.png">
-        <span>LEVEL 2</span>
-    </div>
+<div class="level-badge">
+<img src="assets/images/medal.png">
+<span>LEVEL 2</span>
+</div>
 
-    <div class="level-panel">
+<div class="level-panel">
 
-        <div class="level-stats">
+<div class="level-stats">
 
-            <div>
-                <p>Register/Valid</p>
-                <strong>0/0</strong>
-            </div>
+<div>
+<p>Register/Valid</p>
+<strong><?php echo $l2_register.'/'.$l2_valid; ?></strong>
+</div>
 
-            <div>
-                <p>Total Income</p>
-                <strong>0</strong>
-            </div>
+<div>
+<p>Total Income</p>
+<strong>0</strong>
+</div>
 
-        </div>
+</div>
 
-        <div class="level-commission">
+<div class="level-commission">
+<p>Commission Percentage</p>
+<strong>3%</strong>
+</div>
 
-            <p>Commission Percentage</p>
-            <strong>3%</strong>
+</div>
 
-        </div>
-
-    </div>
-
-    <a href="team/2.php" class="detail-btn">Details</a>
+<a href="team/2.php" class="detail-btn">Details</a>
 
 </div>
 
@@ -219,37 +329,35 @@ $team_withdraw = $stmt->fetchColumn() ?? 0;
 
 <div class="team-level level3">
 
-    <div class="level-badge">
-        <img src="assets/images/medal.png">
-        <span>LEVEL 3</span>
-    </div>
+<div class="level-badge">
+<img src="assets/images/medal.png">
+<span>LEVEL 3</span>
+</div>
 
-    <div class="level-panel">
+<div class="level-panel">
 
-        <div class="level-stats">
+<div class="level-stats">
 
-            <div>
-                <p>Register/Valid</p>
-                <strong>0/0</strong>
-            </div>
+<div>
+<p>Register/Valid</p>
+<strong><?php echo $l3_register.'/'.$l3_valid; ?></strong>
+</div>
 
-            <div>
-                <p>Total Income</p>
-                <strong>0</strong>
-            </div>
+<div>
+<p>Total Income</p>
+<strong>0</strong>
+</div>
 
-        </div>
+</div>
 
-        <div class="level-commission">
+<div class="level-commission">
+<p>Commission Percentage</p>
+<strong>1%</strong>
+</div>
 
-            <p>Commission Percentage</p>
-            <strong>1%</strong>
+</div>
 
-        </div>
-
-    </div>
-
-    <a href="team/3.php" class="detail-btn">Details</a>
+<a href="team/3.php" class="detail-btn">Details</a>
 
 </div>
 
@@ -275,7 +383,6 @@ navigator.clipboard.writeText(link.value);
 alert("Link copied");
 
 }
-
 
 /* SOCIAL ICON ANIMATION */
 
