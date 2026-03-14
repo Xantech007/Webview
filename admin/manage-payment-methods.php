@@ -291,14 +291,23 @@ $methods=$stmt->fetchAll(PDO::FETCH_ASSOC);
 
 <div style="overflow-x:auto;">
 
-<table style="width:100%;max-width:1200px;margin:auto;border-collapse:separate;border-spacing:0 10px;">
+<table style="width:100%;max-width:1400px;margin:0 auto;border-collapse:separate;border-spacing:0 10px;">
 
 <thead>
 <tr style="background:#1f2937;">
 <th>ID</th>
 <th>Name</th>
+<th>Logo</th>
+<th>QR</th>
+<th>Crypto</th>
+<th>Type</th>
+<th>Network / Bank</th>
+<th>Account Name</th>
+<th>Account Number</th>
 <th>Currency</th>
 <th>Rate</th>
+<th>Min Withdraw</th>
+<th>Withdraw Fee</th>
 <th>Country</th>
 <th>Status</th>
 <th>Actions</th>
@@ -311,15 +320,65 @@ $methods=$stmt->fetchAll(PDO::FETCH_ASSOC);
 
 <tr style="background:var(--card);">
 
-<td style="padding:1rem;text-align:center"><?= $m['id'] ?></td>
+<td style="padding:1rem;text-align:center">
+<?= $m['id'] ?>
+</td>
 
-<td style="padding:1rem"><?= htmlspecialchars($m['name']) ?></td>
+<td style="padding:1rem">
+<?= htmlspecialchars($m['name']) ?>
+</td>
 
-<td style="padding:1rem"><?= htmlspecialchars($m['currency']) ?></td>
+<td style="padding:1rem;text-align:center">
+<?php if($m['image']): ?>
+<img src="../<?= $m['image'] ?>" style="max-width:60px;">
+<?php endif; ?>
+</td>
 
-<td style="padding:1rem"><?= $m['conversion_rate'] ?></td>
+<td style="padding:1rem;text-align:center">
+<?php if($m['qr_image']): ?>
+<img src="../<?= $m['qr_image'] ?>" style="max-width:60px;">
+<?php endif; ?>
+</td>
 
-<td style="padding:1rem"><?= $m['active_country'] ?: 'All' ?></td>
+<td style="padding:1rem;text-align:center">
+<?= $m['crypto'] ? "Yes":"No" ?>
+</td>
+
+<td style="padding:1rem;text-align:center">
+<?= htmlspecialchars($m['type']) ?>
+</td>
+
+<td style="padding:1rem">
+<?= htmlspecialchars($m['network']) ?>
+</td>
+
+<td style="padding:1rem">
+<?= htmlspecialchars($m['account_name']) ?>
+</td>
+
+<td style="padding:1rem">
+<?= htmlspecialchars($m['account_number']) ?>
+</td>
+
+<td style="padding:1rem;text-align:center">
+<?= htmlspecialchars($m['currency']) ?>
+</td>
+
+<td style="padding:1rem;text-align:center">
+<?= number_format($m['conversion_rate'],8) ?>
+</td>
+
+<td style="padding:1rem;text-align:center">
+<?= number_format($m['min_withdraw'],2) ?>
+</td>
+
+<td style="padding:1rem;text-align:center">
+<?= number_format($m['withdrawal_fee'],2) ?>
+</td>
+
+<td style="padding:1rem;text-align:center">
+<?= $m['active_country'] ?: "All" ?>
+</td>
 
 <td style="padding:1rem;text-align:center">
 <?= $m['status'] ? 'Active':'Inactive' ?>
@@ -327,7 +386,8 @@ $methods=$stmt->fetchAll(PDO::FETCH_ASSOC);
 
 <td style="padding:1rem;text-align:center">
 
-<button class="btn" onclick='openEditModal(<?= json_encode($m) ?>)'>
+<button class="btn" style="margin-right:6px"
+onclick='openEditModal(<?= json_encode($m, JSON_HEX_APOS | JSON_HEX_QUOT) ?>)'>
 Edit
 </button>
 
