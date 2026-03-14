@@ -13,9 +13,10 @@ $user_id = $_SESSION['user_id'];
 /* GET DEPOSITS */
 
 $stmt=$pdo->prepare("
-SELECT 
+SELECT
 d.amount,
-d.currency,
+d.paid_amount,
+d.paid_currency,
 d.status,
 d.created_at,
 pm.name AS method
@@ -32,7 +33,7 @@ $deposits=$stmt->fetchAll(PDO::FETCH_ASSOC);
 /* GET WITHDRAWALS */
 
 $stmt=$pdo->prepare("
-SELECT 
+SELECT
 amount,
 currency,
 method,
@@ -45,6 +46,7 @@ ORDER BY id DESC
 
 $stmt->execute([$user_id]);
 $withdrawals=$stmt->fetchAll(PDO::FETCH_ASSOC);
+
 ?>
 
 <?php include "inc/header.php"; ?>
@@ -127,8 +129,16 @@ echo "Rejected";
 </div>
 
 <div class="amount">
-+<?php echo number_format($row['amount'],2); ?>
-<?php echo htmlspecialchars($row['currency'] ?? 'USD'); ?>
+
++<?php echo number_format($row['amount'],2); ?> USD
+
+<?php if(!empty($row['paid_amount'])): ?>
+<br>
+<small>
+Paid: <?php echo number_format($row['paid_amount'],2)." ".htmlspecialchars($row['paid_currency']); ?>
+</small>
+<?php endif; ?>
+
 </div>
 
 </div>
@@ -192,8 +202,10 @@ echo "Rejected";
 </div>
 
 <div class="amount minus">
+
 -<?php echo number_format($row['amount'],2); ?>
 <?php echo htmlspecialchars($row['currency'] ?? 'USD'); ?>
+
 </div>
 
 </div>
