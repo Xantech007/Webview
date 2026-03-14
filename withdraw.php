@@ -255,7 +255,7 @@ Fees
 </div>
 
 <div>
-Actually received
+Payout
 <span id="received">0</span>
 </div>
 
