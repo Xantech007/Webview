@@ -221,20 +221,16 @@ $methods=$stmt->fetchAll(PDO::FETCH_ASSOC);
 </div>
 
 <div style="margin-bottom:1.4rem;">
-<div id="walletSection">
-
-<label>Wallet Address</label>
-<input type="text" name="wallet_address" style="width:100%;padding:0.8rem;">
-
-</div>
-</div>
-
-<div style="margin-bottom:1.4rem;">
 <label>Crypto?</label>
 <select name="crypto" id="cryptoSelect" style="width:100%;padding:0.8rem;">
 <option value="1">Yes</option>
 <option value="0">No</option>
 </select>
+</div>
+
+<div style="margin-bottom:1.4rem;" id="walletSection">
+<label>Wallet Address</label>
+<input type="text" name="wallet_address" style="width:100%;padding:0.8rem;">
 </div>
 
 <div style="margin-bottom:1.4rem;">
@@ -458,7 +454,6 @@ Edit
 <select name="crypto" id="edit_crypto" style="width:100%;padding:0.8rem;">
 <option value="1">Yes</option>
 <option value="0">No</option>
-</select>
 </select>
 </div>
 
