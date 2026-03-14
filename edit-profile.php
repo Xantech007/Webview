@@ -1,6 +1,7 @@
 <?php
 session_start();
 require_once "config/database.php";
+require_once "inc/countries.php";
 
 if(!isset($_SESSION['user_id'])){
 header("Location: login.php");
@@ -12,19 +13,39 @@ $user_id = $_SESSION['user_id'];
 $msg="";
 $success="";
 
-/* GET USER PASSWORD */
+/* ================= GET USER DATA ================= */
 
-$stmt=$pdo->prepare("SELECT password FROM users WHERE id=?");
+$stmt=$pdo->prepare("SELECT email,phone,country,password,invite_code,referral_code,vip_level,balance,created_at FROM users WHERE id=?");
 $stmt->execute([$user_id]);
 $user=$stmt->fetch(PDO::FETCH_ASSOC);
 
 
-if($_SERVER["REQUEST_METHOD"]=="POST"){
+/* ================= UPDATE COUNTRY ================= */
+
+if(isset($_POST['update_country'])){
+
+$country=$_POST['country'];
+
+$stmt=$pdo->prepare("UPDATE users SET country=? WHERE id=?");
+$stmt->execute([$country,$user_id]);
+
+$success="Country updated successfully";
+
+/* refresh data */
+$stmt=$pdo->prepare("SELECT email,phone,country,password,invite_code,referral_code,vip_level,balance,created_at FROM users WHERE id=?");
+$stmt->execute([$user_id]);
+$user=$stmt->fetch(PDO::FETCH_ASSOC);
+
+}
+
+
+/* ================= CHANGE PASSWORD ================= */
+
+if(isset($_POST['change_password'])){
 
 $old=$_POST['old_password'];
 $new=$_POST['new_password'];
 $confirm=$_POST['confirm_password'];
-
 
 /* VERIFY OLD PASSWORD */
 
@@ -50,8 +71,6 @@ else{
 
 $newHash=password_hash($new,PASSWORD_DEFAULT);
 
-/* UPDATE PASSWORD */
-
 $stmt=$pdo->prepare("UPDATE users SET password=? WHERE id=?");
 $stmt->execute([$newHash,$user_id]);
 
@@ -72,13 +91,79 @@ $success="Password changed successfully";
 <i class="fa fa-arrow-left"></i>
 </a>
 
-<span>Change Password</span>
+<span>Account Settings</span>
 
 </div>
 
 
 <div class="change-container">
 
+
+<!-- ================= USER DETAILS ================= -->
+
+<div class="pwd-box">
+<input type="text" value="<?php echo htmlspecialchars($user['email']); ?>" readonly>
+</div>
+
+<div class="pwd-box">
+<input type="text" value="<?php echo htmlspecialchars($user['phone']); ?>" readonly>
+</div>
+
+<div class="pwd-box">
+<input type="text" value="VIP<?php echo $user['vip_level']; ?>" readonly>
+</div>
+
+<div class="pwd-box">
+<input type="text" value="<?php echo number_format($user['balance'],2); ?> USD" readonly>
+</div>
+
+<div class="pwd-box">
+<input type="text" value="<?php echo htmlspecialchars($user['invite_code']); ?>" readonly>
+</div>
+
+<div class="pwd-box">
+<input type="text" value="<?php echo htmlspecialchars($user['referral_code']); ?>" readonly>
+</div>
+
+<div class="pwd-box">
+<input type="text" value="<?php echo $user['created_at']; ?>" readonly>
+</div>
+
+
+
+<!-- ================= UPDATE COUNTRY ================= -->
+
+<form method="POST">
+
+<div class="pwd-box">
+
+<select name="country" required>
+
+<?php
+
+foreach($countries as $c){
+
+$selected = ($c == $user['country']) ? "selected" : "";
+
+echo "<option value=\"$c\" $selected>$c</option>";
+
+}
+
+?>
+
+</select>
+
+</div>
+
+<button class="change-btn" name="update_country">
+Update Country
+</button>
+
+</form>
+
+
+
+<!-- ================= CHANGE PASSWORD ================= -->
 
 <form method="POST">
 
@@ -121,11 +206,12 @@ required>
 </div>
 
 
-<button class="change-btn">
-Confirm
+<button class="change-btn" name="change_password">
+Change Password
 </button>
 
 </form>
+
 
 
 <?php if($msg): ?>
