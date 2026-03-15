@@ -1,4 +1,5 @@
 <?php
+ob_start();
 session_start();
 require_once "config/database.php";
 
@@ -15,7 +16,7 @@ $stmt=$pdo->prepare("SELECT id,email,balance,password,country FROM users WHERE i
 $stmt->execute([$user_id]);
 $user=$stmt->fetch(PDO::FETCH_ASSOC);
 
-$balance=$user['balance']; // stored in USD
+$balance=$user['balance'];
 $user_country=$user['country'];
 
 /* FETCH PAYMENT METHODS */
@@ -35,7 +36,7 @@ $msg="";
 if($_SERVER['REQUEST_METHOD']=="POST"){
 
 $method=$_POST['method'];
-$amount_local=floatval($_POST['amount']); // user enters local currency
+$amount_local=floatval($_POST['amount']);
 $password=$_POST['password'];
 
 $address=trim($_POST['address'] ?? '');
@@ -49,9 +50,10 @@ $account_number=$_POST['account_number'] ?? null;
 $stmt=$pdo->prepare("SELECT conversion_rate,withdrawal_fee,min_withdraw,currency FROM payment_methods WHERE name=?");
 $stmt->execute([$method]);
 $methodData=$stmt->fetch(PDO::FETCH_ASSOC);
+
 $currency=$methodData['currency'];
 $rate=$methodData['conversion_rate'];
-$fee=$methodData['withdrawal_fee'];   // fixed fee
+$fee=$methodData['withdrawal_fee'];
 $minWithdraw=$methodData['min_withdraw'];
 
 /* CONVERT TO USD */
@@ -70,7 +72,7 @@ $msg="Insufficient balance";
 
 }elseif($amount_local<$minWithdraw){
 
-$msg="Minimum withdrawal is ".$minWithdraw;
+$msg="Minimum withdrawal is ".$minWithdraw." ".$currency;
 
 }elseif($amount_local<=0){
 
@@ -106,12 +108,11 @@ $received
 $pdo->prepare("UPDATE users SET balance=balance-? WHERE id=?")
 ->execute([$amount_usd,$user_id]);
 
-$withdraw_id = $pdo->lastInsertId();
+$withdraw_id=$pdo->lastInsertId();
 
-/* store receipt id */
-$_SESSION['withdraw_receipt'] = $withdraw_id;
+/* REDIRECT TO RECEIPT */
 
-header("Location: withdrawal-receipt.php?id=".$withdraw_id);
+echo "<script>window.location='withdrawal-receipt.php?id=".$withdraw_id."';</script>";
 exit;
 
 }
@@ -356,3 +357,5 @@ document.getElementById("received").innerText=received.toFixed(2)+" "+currency;
 </script>
 
 <?php include "inc/footer.php"; ?>
+
+<?php ob_end_flush(); ?>
