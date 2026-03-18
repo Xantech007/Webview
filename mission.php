@@ -188,7 +188,7 @@ Completed
 
 <!-- IN PROGRESS -->
 
-<div id="progress" class="task-content active">
+<div id="progress" class="tab-content active">
 
 <?php if(!$running_vips): ?>
 
@@ -314,7 +314,7 @@ Waiting
 
 <!-- COMPLETED -->
 
-<div id="completed" class="task-content">
+<div id="completed" class="tab-content">
 
 <?php if(!$completed): ?>
 
