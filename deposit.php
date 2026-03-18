@@ -206,22 +206,33 @@ Note. Send the payment using MOMO to the number above and upload proof.
 
 <script>
 
-/* COPY CRYPTO ADDRESS */
-function copyAddress(){
-var copyText=document.getElementById("walletAddress");
-copyText.select();
-copyText.setSelectionRange(0,99999);
-navigator.clipboard.writeText(copyText.value);
-alert("Address copied");
+function showToast(message){
+var toast = document.getElementById("copyToast");
+
+toast.innerText = message;
+toast.classList.add("show");
+
+setTimeout(function(){
+    toast.classList.remove("show");
+}, 2000);
 }
 
-/* COPY ACCOUNT NUMBER */
+/* COPY CRYPTO */
+function copyAddress(){
+var copyText=document.getElementById("walletAddress");
+
+navigator.clipboard.writeText(copyText.value);
+
+showToast("Address copied ✓");
+}
+
+/* COPY ACCOUNT */
 function copyAccount(){
 var copyText=document.getElementById("accountNumber");
-copyText.select();
-copyText.setSelectionRange(0,99999);
+
 navigator.clipboard.writeText(copyText.value);
-alert("Account number copied");
+
+showToast("Account number copied ✓");
 }
 
 /* CONVERSION */
