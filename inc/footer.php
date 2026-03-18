@@ -34,6 +34,12 @@ $currentPage = basename($_SERVER['PHP_SELF']);
 </div>
 
 <script>
+if("serviceWorker" in navigator){
+  navigator.serviceWorker.register("/service-worker.js");
+}
+</script>
+
+<script>
 
 /* BANNER SLIDER */
 
