@@ -95,7 +95,7 @@ exit;
 
 </div>
 
-<!-- QR IMAGE -->
+<!-- QR -->
 <?php if(!empty($method['qr_image'])): ?>
 <div class="deposit-qr">
 <img src="<?php echo htmlspecialchars($method['qr_image']); ?>">
@@ -105,11 +105,7 @@ exit;
 
 <?php if($method['crypto']==1): ?>
 
-<!-- CRYPTO SECTION -->
-
-<div class="deposit-address-title">
-Address
-</div>
+<div class="deposit-address-title">Address</div>
 
 <div class="deposit-address">
 <input type="text"
@@ -122,27 +118,22 @@ readonly>
 
 <?php else: ?>
 
-<!-- BANK / MOMO SECTION -->
-
 <div class="deposit-address-title">
 <?php echo ($method['type']=="bank") ? "Bank Details" : "MOMO Details"; ?>
 </div>
 
-<!-- NETWORK / BANK -->
 <div class="deposit-address">
 <input type="text"
 value="<?php echo htmlspecialchars($method['network']); ?>"
 readonly>
 </div>
 
-<!-- ACCOUNT NAME -->
 <div class="deposit-address">
 <input type="text"
 value="<?php echo htmlspecialchars($method['account_name']); ?>"
 readonly>
 </div>
 
-<!-- ACCOUNT NUMBER -->
 <div class="deposit-address">
 <input type="text"
 value="<?php echo htmlspecialchars($method['account_number']); ?>"
@@ -198,41 +189,44 @@ Note. Send the payment using MOMO to the number above and upload proof.
 
 </div>
 
-<div id="copyToast" class="copy-toast">
-    Copied ✓
-</div>
+<!-- TOAST -->
+<div id="copyToast" class="copy-toast">Copied ✓</div>
 
 <?php include "inc/footer.php"; ?>
 
 <script>
 
+/* TOAST */
 function showToast(message){
-var toast = document.getElementById("copyToast");
+    var toast = document.getElementById("copyToast");
+    if(!toast) return;
 
-toast.innerText = message;
-toast.classList.add("show");
+    toast.innerText = message;
+    toast.classList.add("show");
 
-setTimeout(function(){
-    toast.classList.remove("show");
-}, 2000);
+    setTimeout(function(){
+        toast.classList.remove("show");
+    }, 2000);
 }
 
-/* COPY CRYPTO */
+/* COPY ADDRESS */
 function copyAddress(){
-var copyText=document.getElementById("walletAddress");
+    const el = document.getElementById("walletAddress");
+    if(!el) return;
 
-navigator.clipboard.writeText(copyText.value);
-
-showToast("Address copied ✓");
+    navigator.clipboard.writeText(el.value)
+    .then(() => showToast("Address copied ✓"))
+    .catch(() => alert("Copy failed"));
 }
 
 /* COPY ACCOUNT */
 function copyAccount(){
-var copyText=document.getElementById("accountNumber");
+    const el = document.getElementById("accountNumber");
+    if(!el) return;
 
-navigator.clipboard.writeText(copyText.value);
-
-showToast("Account number copied ✓");
+    navigator.clipboard.writeText(el.value)
+    .then(() => showToast("Account number copied ✓"))
+    .catch(() => alert("Copy failed"));
 }
 
 /* CONVERSION */
@@ -251,5 +245,5 @@ converted.value = convertedAmount.toFixed(2);
 hiddenPaid.value = convertedAmount.toFixed(2);
 
 });
-  
+
 </script>
