@@ -147,7 +147,7 @@ unset($_SESSION['withdraw_msg']);
         </div>
 
         <div class="action-item">
-            <a href="#" onclick="installApp()">
+            <a href="app.php">
                 <div class="icon-circle">
                     <i class="fa-solid fa-mobile-screen"></i>
                 </div>
