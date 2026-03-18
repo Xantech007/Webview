@@ -264,6 +264,8 @@ margin-bottom:15px;
 
 .task-card{
 display:flex;
+position:relative;
+z-index:1;
 align-items:center;
 justify-content:space-between;
 background:linear-gradient(90deg,#3a2b20,#5a402e);
@@ -278,8 +280,9 @@ overflow:hidden;
 
 .task-left{
 position:relative;
+overflow:hidden;
 width:70px;
-height:70px;
+height:70px;z
 display:flex;
 align-items:center;
 justify-content:center;
@@ -294,8 +297,10 @@ height:45px;
 
 .lock-overlay{
 position:absolute;
-color:white;
-font-size:20px;
+left:50%;
+top:50%;
+transform:translate(-50%,-50%);
+z-index:1; /* LOWER IT */
 }
 
 /* TEXT */
@@ -473,6 +478,7 @@ border-radius:10px;
 
 /* Full-width wrapper touching screen edges */
 .footer-wrapper {
+    z-index:9999;
     position: fixed;
     bottom: 0;
     left: 0;
