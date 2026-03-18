@@ -4,20 +4,26 @@ RewriteEngine On
 RewriteCond %{HTTPS} !=on
 RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
-# REMOVE .php EXTENSION FROM URL
-RewriteCond %{REQUEST_FILENAME} !-d
+# DO NOT TOUCH REAL FILES (VERY IMPORTANT)
+RewriteCond %{REQUEST_FILENAME} -f
+RewriteRule ^ - [L]
+
+# DO NOT TOUCH REAL DIRECTORIES
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+
+# CLEAN URL → PHP
 RewriteCond %{REQUEST_FILENAME}\.php -f
-RewriteRule ^([^\.]+)$ $1.php [L]
+RewriteRule ^([^/.]+)$ $1.php [L]
 
-# OPTIONAL: REMOVE .html EXTENSION
-RewriteCond %{REQUEST_FILENAME} !-d
+# CLEAN URL → HTML
 RewriteCond %{REQUEST_FILENAME}\.html -f
-RewriteRule ^([^\.]+)$ $1.html [L]
+RewriteRule ^([^/.]+)$ $1.html [L]
 
-# PREVENT DIRECT ACCESS TO .PHP (optional clean look)
+# REDIRECT .php → clean URL
 RewriteCond %{THE_REQUEST} \s/([^.]+)\.php [NC]
 RewriteRule ^ /%1 [L,R=301]
 
-# PREVENT DIRECT ACCESS TO .HTML
+# REDIRECT .html → clean URL
 RewriteCond %{THE_REQUEST} \s/([^.]+)\.html [NC]
 RewriteRule ^ /%1 [L,R=301]
