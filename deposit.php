@@ -95,7 +95,6 @@ exit;
 
 </div>
 
-<!-- QR -->
 <?php if(!empty($method['qr_image'])): ?>
 <div class="deposit-qr">
 <img src="<?php echo htmlspecialchars($method['qr_image']); ?>">
@@ -209,24 +208,26 @@ function showToast(message){
     }, 2000);
 }
 
-/* COPY ADDRESS */
+/* COPY ADDRESS (NO DOUBLE POPUP) */
 function copyAddress(){
     const el = document.getElementById("walletAddress");
     if(!el) return;
 
-    navigator.clipboard.writeText(el.value)
-    .then(() => showToast("Address copied ✓"))
-    .catch(() => alert("Copy failed"));
+    el.select();
+    document.execCommand("copy");
+
+    showToast("Address copied ✓");
 }
 
-/* COPY ACCOUNT */
+/* COPY ACCOUNT (NO DOUBLE POPUP) */
 function copyAccount(){
     const el = document.getElementById("accountNumber");
     if(!el) return;
 
-    navigator.clipboard.writeText(el.value)
-    .then(() => showToast("Account number copied ✓"))
-    .catch(() => alert("Copy failed"));
+    el.select();
+    document.execCommand("copy");
+
+    showToast("Account number copied ✓");
 }
 
 /* CONVERSION */
