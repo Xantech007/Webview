@@ -95,6 +95,7 @@ exit;
 
 </div>
 
+<!-- QR -->
 <?php if(!empty($method['qr_image'])): ?>
 <div class="deposit-qr">
 <img src="<?php echo htmlspecialchars($method['qr_image']); ?>">
@@ -188,46 +189,24 @@ Note. Send the payment using MOMO to the number above and upload proof.
 
 </div>
 
-<!-- TOAST -->
-<div id="copyToast" class="copy-toast">Copied ✓</div>
-
 <?php include "inc/footer.php"; ?>
 
 <script>
 
-/* TOAST */
-function showToast(message){
-    var toast = document.getElementById("copyToast");
-    if(!toast) return;
-
-    toast.innerText = message;
-    toast.classList.add("show");
-
-    setTimeout(function(){
-        toast.classList.remove("show");
-    }, 2000);
-}
-
-/* COPY ADDRESS (NO DOUBLE POPUP) */
+/* COPY ADDRESS (uses browser default toast) */
 function copyAddress(){
     const el = document.getElementById("walletAddress");
     if(!el) return;
 
-    el.select();
-    document.execCommand("copy");
-
-    showToast("Address copied ✓");
+    navigator.clipboard.writeText(el.value);
 }
 
-/* COPY ACCOUNT (NO DOUBLE POPUP) */
+/* COPY ACCOUNT (uses browser default toast) */
 function copyAccount(){
     const el = document.getElementById("accountNumber");
     if(!el) return;
 
-    el.select();
-    document.execCommand("copy");
-
-    showToast("Account number copied ✓");
+    navigator.clipboard.writeText(el.value);
 }
 
 /* CONVERSION */
