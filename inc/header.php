@@ -6,11 +6,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <link rel="icon" type="image/png" href="assets/images/logo.webp">
-    
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    
-<?php include "assets/css/style.css"; ?>
 
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<?php include "assets/css/style.css"; ?>
 
 </head>
 <body>
@@ -18,36 +18,28 @@
 <div class="header" id="header">
 
 <div class="header-left">
+
 <a href="/" style="display:flex; align-items:center; gap:10px; text-decoration:none;">
+
     <img src="assets/images/logo.webp">
-    <div class="header-title">BINANCE DIGITAL</div>
+
+    <div class="header-title">
+        BINANCE DIGITAL
+    </div>
+
 </a>
+
 </div>
 
-<div class="lang-btn" id="langToggle">
+<!-- GOOGLE TRANSLATE -->
+<div class="lang-btn">
 
-<i class="fa-solid fa-globe"></i>
-<span id="currentLang">English</span>
+    <i class="fa-solid fa-globe"></i>
 
-<i class="fa-solid fa-angle-down"></i>
-
-<div class="lang-dropdown" id="langMenu">
-
-<div onclick="setLanguage('en','English')">English</div>
-<div onclick="setLanguage('es','Spanish')">Español</div>
-<div onclick="setLanguage('fr','French')">Français</div>
-<div onclick="setLanguage('pt','Portuguese')">Português</div>
-<div onclick="setLanguage('ru','Russian')">Русский</div>
-<div onclick="setLanguage('ar','Arabic')">العربية</div>
-<div onclick="setLanguage('zh-CN','Chinese')">中文</div>
-<div onclick="setLanguage('hi','Hindi')">Hindi</div>
+    <?php include __DIR__ . "/translate.php"; ?>
 
 </div>
 
 </div>
 
-</div>
-
-<div id="google_translate_element" style="display:none;"></div>
-
-<?php include "whatsapp-support.php"; ?>
+<?php include __DIR__ . "/whatsapp-support.php"; ?>
