@@ -14,7 +14,7 @@ if (isset($_POST['update_reset_time'])) {
 
         try {
 
-            $stmt = $pdo->prepare("UPDATE task_rest SET reset_time=? LIMIT 1");
+            $stmt = $pdo->prepare("UPDATE task_reset SET reset_time=? LIMIT 1");
             $stmt->execute([$reset_time]);
 
             $success = "Task reset time updated successfully.";
@@ -33,7 +33,7 @@ if (isset($_POST['update_reset_time'])) {
 /* FETCH CURRENT RESET TIME */
 try {
 
-    $stmt = $pdo->query("SELECT reset_time FROM task_rest LIMIT 1");
+    $stmt = $pdo->query("SELECT reset_time FROM task_reset LIMIT 1");
     $taskReset = $stmt->fetch(PDO::FETCH_ASSOC);
 
     $currentResetTime = $taskReset['reset_time'] ?? '';
