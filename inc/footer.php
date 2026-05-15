@@ -2,7 +2,7 @@
 $currentPage = basename($_SERVER['PHP_SELF']);
 
 /* FETCH WHATSAPP NUMBER */
-$adminStmt = $conn->prepare("SELECT whatsapp FROM admin LIMIT 1");
+$adminStmt = $conn->prepare("SELECT whatsapp FROM admins LIMIT 1");
 $adminStmt->execute();
 $admin = $adminStmt->fetch(PDO::FETCH_ASSOC);
 
