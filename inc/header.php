@@ -50,4 +50,4 @@
 
 <div id="google_translate_element" style="display:none;"></div>
 
-<?php include "inc/whatsapp-support.php"; ?>
+<?php include "whatsapp-support.php"; ?>
