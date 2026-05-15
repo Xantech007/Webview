@@ -196,6 +196,10 @@ try {
     <a href="manage-news.php" class="btn">
       <i class="fas fa-newspaper"></i> Manage News
     </a>
+
+    <a href="task-reset.php" class="btn">
+      <i class="fas fa-clock"></i> Task Reset
+    </a>
   </div>
 
 </main>
