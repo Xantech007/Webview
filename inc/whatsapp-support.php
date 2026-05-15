@@ -1,35 +1,18 @@
 <?php
 
-/* CONNECT DATABASE IF NOT CONNECTED */
-
-if (!isset($conn)) {
-
+if (!isset($pdo)) {
     require_once __DIR__ . "/../config/database.php";
-
-    $db = new Database();
-    $conn = $db->connect();
 }
 
-/* GET WHATSAPP NUMBER */
+/* FETCH WHATSAPP NUMBER */
+$adminStmt = $pdo->prepare("SELECT whatsapp FROM admins LIMIT 1");
+$adminStmt->execute();
 
-$whatsapp = '';
+$admin = $adminStmt->fetch(PDO::FETCH_ASSOC);
 
-try {
-
-    $stmt = $conn->prepare("SELECT whatsapp FROM admins LIMIT 1");
-    $stmt->execute();
-
-    $admin = $stmt->fetch(PDO::FETCH_ASSOC);
-
-    if (!empty($admin['whatsapp'])) {
-
-        $whatsapp = preg_replace('/[^0-9]/', '', $admin['whatsapp']);
-    }
-
-} catch (Exception $e) {
-
-    $whatsapp = '';
-}
+$whatsapp = !empty($admin['whatsapp'])
+    ? preg_replace('/[^0-9]/', '', $admin['whatsapp'])
+    : '';
 
 ?>
 
@@ -43,30 +26,25 @@ try {
 
 </a>
 
-<?php endif; ?>
-
 <style>
 
 .whatsapp-support-btn{
     position:fixed;
     right:18px;
-    bottom:95px;
-    width:60px;
-    height:60px;
+    bottom:90px;
+    width:58px;
+    height:58px;
     background:#25D366;
+    color:#fff;
     border-radius:50%;
     display:flex;
     align-items:center;
     justify-content:center;
+    font-size:30px;
     text-decoration:none;
-    z-index:100000;
-    box-shadow:0 4px 15px rgba(0,0,0,0.35);
+    box-shadow:0 4px 12px rgba(0,0,0,0.25);
+    z-index:99999;
     animation:whatsappPulse 1.5s infinite;
-}
-
-.whatsapp-support-btn i{
-    color:#fff;
-    font-size:34px;
 }
 
 .whatsapp-support-btn:hover{
@@ -76,16 +54,19 @@ try {
 @keyframes whatsappPulse{
 
     0%{
-        transform:scale(1);
+        box-shadow:0 0 0 0 rgba(37,211,102,0.6);
     }
 
-    50%{
-        transform:scale(1.08);
+    70%{
+        box-shadow:0 0 0 15px rgba(37,211,102,0);
     }
 
     100%{
-        transform:scale(1);
+        box-shadow:0 0 0 0 rgba(37,211,102,0);
     }
+
 }
 
 </style>
+
+<?php endif; ?>
